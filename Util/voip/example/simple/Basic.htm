@@ -1,0 +1,40 @@
+<!-- 
+  You need to rewrite at least the serveraddress applet parameter.
+  Then launch the webphone by opening this page in your browser or copy-paste the code from the body section into your html page.
+-->
+
+
+<html>
+
+<head>
+<title>Mizu WebPhone</title>
+</head>
+
+<body>
+	<p>
+		<b>Mizu-WebPhone Test Demo</b>
+	</p>
+
+	<script src="http://www.mizu-voip.com/webphonedeploy.js"></script>
+	<script> 
+        var attributes = { code:'webphone.webphone.class', name: 'webphone', archive: 'webphone.jar', codebase: '.', width:300, height:330 , MAYSCRIPT:true } ; 
+        var parameters = {
+serveraddress: 'yoursipdomain.com', 
+JAVA_CODEBASE: '.',
+MAYSCRIPT: 'true',
+mayscript: 'yes',
+scriptable: 'true'       
+} ;   
+
+        deployJava.runApplet(attributes, parameters, '1.5'); 
+    </script>
+
+
+	<p>
+		<a href="http://www.mizu-voip.com/">Mizutech VoIP software
+			solutions</a>
+	</p>
+</body>
+
+
+</html>

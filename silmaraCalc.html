@@ -1,0 +1,188 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<script src="/js/jquery.js" type="text/javascript"></script>
+<script>
+	function mostrar_div(_id){
+		$("#DCH").hide();
+		$("#DCF").hide();
+                $("#GPM").hide();
+                $("#IMC").hide();
+		$("#"+_id).show();
+	}	
+	
+	$(document).ready(function(){			
+		$("#DCH_Calc").click(function(){			
+			Heart_Rate=$("#DCH_Freq").val();
+			Stroke_Volume=$("#DCH_Vol").val();
+			Cardiac_Output=Heart_Rate * Stroke_Volume;
+			
+			$("#DCH_Resultado").val(Cardiac_Output);
+			
+			return false;
+		});
+		$("#DCF_Calc").click(function(){
+			
+			Oxygen_uptake = parseFloat($("#DCF_O2").val());
+			Arterial_oxygen = parseFloat($("#DCF_O2a").val());
+			Venous_oxygen = parseFloat($("#DCF_O2v").val());
+			Cardiac_output = (Oxygen_uptake/(Arterial_oxygen-Venous_oxygen));
+			$("#DCF_Resultado").val(Cardiac_output);
+			return false;
+		});
+                $("#GPM_Calc").click(function(){
+			
+			_Volume = parseFloat($("#GPM_Volume").val());
+			_Tempo = parseFloat($("#GPM_Tempo").val());			
+			_Firmamento = ((_Volume / _Tempo) * 3);
+			$("#GPM_Resultado").val(_Firmamento);
+			return false;
+		});
+                $("#IMC_Calc").click(function(){
+			
+			_Peso = parseFloat($("#IMC_Peso").val());
+			_Altura = parseFloat($("#IMC_Altura").val());			
+			_IMC = (_Peso / ( _Altura * _Altura) ).toFixed(2);
+			$("#IMC_Resultado").val(_IMC);
+                        if ( _IMC < 17){
+                            $("#IMC_Situacao").val("Muito abaixo do peso");
+                        }
+                        if (( _IMC >= 17 ) && ( _IMC <= 18.49)){
+                            $("#IMC_Situacao").val("Abaixo do peso");
+                        }
+                        if (( _IMC >= 18.5 ) && ( _IMC <= 24.99)){
+                            $("#IMC_Situacao").val("Peso Normal");
+                        }
+                        if (( _IMC >= 25 ) && ( _IMC <= 29.99)){
+                            $("#IMC_Situacao").val("Acima do Peso");
+                        }
+                        if (( _IMC >= 30 ) && ( _IMC <= 34.99)){
+                            $("#IMC_Situacao").val("Obesidade I");
+                        }
+                        if (( _IMC >= 35 ) && ( _IMC <= 39.99)){
+                            $("#IMC_Situacao").val("Obesidade II (Severa)");
+                        }
+                        if ( _IMC >= 40 ){
+                            $("#IMC_Situacao").val("Obesidade III (Morbida)");
+                        }
+			return false;
+		});
+			
+		$("#calculo").change(function(){			
+			mostrar_div($(this).val());
+                        $("input").val("");
+		});
+	});
+
+</script>
+</head>
+<body>
+	<div id="box"
+		style="text-align: center; border-radius: 20px; box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5); -moz-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5); -webkit-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5); padding: 10px; background-color: white; height: 400px; position: absolute; width: 600px; font-family: Geneva, Arial, Helvetica, sans-serif;">
+
+		<h1>
+			<img src="calc_logo.jpg" width="50px" /> Silmara's Calculator
+			</h2>
+			Escolha seu calculo: <select id="calculo">
+				<option value="0">Escolha o calculo</option>
+				<option value="DCH">Débito cardíaco baseado em parâmetros
+					hemodinâmicos</option>
+				<option value="DCF">Débito Cardíaco - Princípio de Fick</option>
+				<option value="GPM">Descobrir Gotas por Minuto</option>
+				<option value="IMC">IMC - Indice de Massa Corporal</option>
+			</select>
+			<div id="DCH" style='display: none'>
+				<h2>Débito cardíaco baseado em parâmetros hemodinâmicos</h2>
+				<table>
+					<tr>
+						<td>Frequencia Cardiaca</td>
+						<td><input type="text" size='10' id='DCH_Freq' /></td>
+					</tr>
+					<tr>
+						<td>Volume Sistolico</td>
+						<td><input type="text" size='10' id='DCH_Vol' /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><a href="#" id="DCH_Calc">Calcular</a></td>
+					</tr>
+					<tr>
+						<td>Debito Cardiaco</td>
+						<td><input type="text" size='10' id='DCH_Resultado' /></td>
+					</tr>
+				</table>
+			</div>
+			<div id="DCF" style='display: none'>
+				<h2>Débito Cardíaco - Princípio de Fick</h2>
+				<table>
+					<tr>
+						<td>Consumo de oxigênio</td>
+						<td><input type="text" size='10' id='DCF_O2' /></td>
+					</tr>
+					<tr>
+						<td>Oxigênio arterial</td>
+						<td><input type="text" size='10' id='DCF_O2a' /></td>
+					</tr>
+					<tr>
+						<td>Oxigênio venoso</td>
+						<td><input type="text" size='10' id='DCF_O2v' /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><a href="#" id='DCF_Calc'>Calcular</a></td>
+					</tr>
+					<tr>
+						<td>Debito Cardiaco</td>
+						<td><input type="text" size='10' id='DCF_Resultado' /></td>
+					</tr>
+				</table>
+			</div>
+			<div id="GPM" style='display: none'>
+				<h2>Descobrir Gotas por Minuto</h2>
+				<table>
+					<tr>
+						<td>Volume</td>
+						<td><input type="text" size='10' id='GPM_Volume' /></td>
+					</tr>
+					<tr>
+						<td>Tempo</td>
+						<td><input type="text" size='10' id='GPM_Tempo' /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><a href="#" id="GPM_Calc">Calcular</a></td>
+					</tr>
+					<tr>
+						<td>Firmamento de Soro</td>
+						<td><input type="text" size='10' id='GPM_Resultado' /></td>
+					</tr>
+				</table>
+			</div>
+			<div id="IMC" style='display: none'>
+				<h2>IMC - Índice de Massa Corporal</h2>
+				<table>
+					<tr>
+						<td>Peso</td>
+						<td><input type="text" size='10' id='IMC_Peso' /></td>
+					</tr>
+					<tr>
+						<td>Altura</td>
+						<td><input type="text" size='10' id='IMC_Altura' /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><a href="#" id="IMC_Calc">Calcular</a></td>
+					</tr>
+					<tr>
+						<td>IMC</td>
+						<td><input type="text" size='10' id='IMC_Resultado' /></td>
+					</tr>
+					<tr>
+						<td>Situação</td>
+						<td><input type="text" size='20' id='IMC_Situacao' /></td>
+					</tr>
+				</table>
+			</div>
+	</div>
+</body>
+</html>

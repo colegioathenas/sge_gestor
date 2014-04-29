@@ -1,0 +1,59 @@
+<html>
+
+<head>
+<link rel="StyleSheet" href="style.css" type="text/css">
+<script src="funcoes.js"></script>
+
+<SCRIPT LANGUAGE="JavaScript">
+	function BntOkClick(){	
+		if (window.AcrescimoDesconto[0].checked)
+			sAcreDesc = 'D';
+		else
+			sAcreDesc = 'A';
+			
+		if (window.PercentualValor[0].checked)
+			sPercValor = '%';
+		else
+			sPercValor = '$';
+			
+		IniciaFechamentoCupom(sAcreDesc,sPercValor,window.edValor.value)
+
+	}	
+	function SetaFoco(){
+		window.edValor.focus();
+	}
+</SCRIPT>
+
+</head>
+
+<body topmargin="0" leftmargin="0" onload="SetaFoco()">
+
+	<table border="0" cellpadding="0" cellspacing="0" width="889"
+		height="136">
+		<tr>
+			<td width="887" colspan="2" class="title1" height="55">Inicia
+				Fechamento do Cupom</td>
+		</tr>
+		<tr>
+			<td class="text" height="40" width="288"><input type="radio"
+				value="Acrescimo" checked name="AcrescimoDesconto">Acr�scimo<input
+				type="radio" value="Desconto" name="AcrescimoDesconto">Desconto
+			</td>
+			<td valign="middle" class="text" width="597" rowspan="2" height="81">
+				<input type="button" value="OK" name="B3" class="Buttom"
+				onClick="BntOkClick()"><br> <input type="button"
+				value="Cancelar" name="B4" class="Buttom"
+				onClick="javascript: window.location.href='principal.htm';">
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="41" width="288"><input type="radio"
+				value="Percentual" name="PercentualValor" checked>Percentual<input
+				type="radio" value="Valor" name="PercentualValor">Valor <br>Valor:
+				<input type="text" name="edValor" size="20" class="text2"></td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

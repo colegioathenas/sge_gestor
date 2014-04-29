@@ -1,0 +1,21 @@
+CREATE TABLE `professor_disponibilidade` (
+  `nCdDisponibilidade` int(11) NOT NULL AUTO_INCREMENT,
+  `nCPF` decimal(14,0) DEFAULT NULL,
+  `dInicio` datetime DEFAULT NULL,
+  `dFim` datetime DEFAULT NULL,
+  `cTurno` char(1) DEFAULT NULL,
+  `bDiasPares` tinyint(1) DEFAULT NULL,
+  `bDiasImpares` tinyint(1) DEFAULT NULL,
+  `tSegInicio` time DEFAULT NULL,
+  `tSegFim` time DEFAULT NULL,
+  `tTerInicio` time DEFAULT NULL,
+  `tTerFim` time DEFAULT NULL,
+  `tQuaInicio` time DEFAULT NULL,
+  `tQuaFim` time DEFAULT NULL,
+  `tQuiInicio` time DEFAULT NULL,
+  `tQuiFim` time DEFAULT NULL,
+  `tSexInicio` time DEFAULT NULL,
+  `tSexFim` time DEFAULT NULL,
+  PRIMARY KEY (`nCdDisponibilidade`),
+  KEY `fk_disponibilidade_professor` (`nCPF`)
+)

@@ -1,0 +1,150 @@
+OFXHEADER:100
+DATA:OFXSGML
+VERSION:102
+SECURITY:NONE
+ENCODING:USASCII
+CHARSET:1252
+COMPRESSION:NONE
+OLDFILEUID:NONE
+NEWFILEUID:NONE
+
+<OFX>
+    <SIGNONMSGSRSV1>
+        <SONRS>
+            <STATUS>
+                <CODE>0
+                <SEVERITY>INFO
+            </STATUS>
+            <DTSERVER>20121201210409[-3:GMT]
+            <LANGUAGE>ENG
+            <FI>
+                <ORG>SANTANDER
+                <FID>SANTANDER
+            </FI>
+        </SONRS>
+    </SIGNONMSGSRSV1>
+    <BANKMSGSRSV1>
+        <STMTTRNRS>
+            <TRNUID>1
+            <STATUS>
+                <CODE>0
+                <SEVERITY>INFO
+            </STATUS>
+            <STMTRS>
+                <CURDEF>BRL
+                <BANKACCTFROM>
+                    <BANKID>033
+                    <ACCTID>4269010859934
+                    <ACCTTYPE>CHECKING
+                </BANKACCTFROM>
+                <BANKTRANLIST>
+                    <DTSTART>20121201210409[-3:GMT]
+                    <DTEND>20121201210409[-3:GMT]
+                    <STMTTRN>
+                        <TRNTYPE>OTHER
+                        <DTPOSTED>20121126000000[-3:GMT]
+                        <TRNAMT>            -14.70
+                        <FITID>00292363
+                        <CHECKNUM>00292363
+                        <PAYEEID>0
+                        <MEMO>COMPRA CARTAO MAESTRO              24/11 PADARIA E CONFE    
+                    </STMTTRN>
+                    <STMTTRN>
+                        <TRNTYPE>OTHER
+                        <DTPOSTED>20121126000000[-3:GMT]
+                        <TRNAMT>            -89.63
+                        <FITID>00343863
+                        <CHECKNUM>00343863
+                        <PAYEEID>0
+                        <MEMO>COMPRA CARTAO MAESTRO              25/11 PARATII BOTECO     
+                    </STMTTRN>
+                    <STMTTRN>
+                        <TRNTYPE>OTHER
+                        <DTPOSTED>20121126000000[-3:GMT]
+                        <TRNAMT>            -22,00
+                        <FITID>00451263
+                        <CHECKNUM>00451263
+                        <PAYEEID>0
+                        <MEMO>COMPRA CARTAO MAESTRO              25/11 PIZ BOCA DO FOR    
+                    </STMTTRN>
+                    <STMTTRN>
+                        <TRNTYPE>OTHER
+                        <DTPOSTED>20121126000000[-3:GMT]
+                        <TRNAMT>            -33.37
+                        <FITID>00025863
+                        <CHECKNUM>00025863
+                        <PAYEEID>0
+                        <MEMO>COMPRA CARTAO MAESTRO              26/11 VENI               
+                    </STMTTRN>
+                    <STMTTRN>
+                        <TRNTYPE>OTHER
+                        <DTPOSTED>20121127000000[-3:GMT]
+                        <TRNAMT>            116.83
+                        <FITID>00071163
+                        <CHECKNUM>00071163
+                        <PAYEEID>0
+                        <MEMO>RESTITUICAO IMPOSTO DE RENDA PF    DOC IRPF                 
+                    </STMTTRN>
+                    <STMTTRN>
+                        <TRNTYPE>OTHER
+                        <DTPOSTED>20121127000000[-3:GMT]
+                        <TRNAMT>            -15.34
+                        <FITID>00462963
+                        <CHECKNUM>00462963
+                        <PAYEEID>0
+                        <MEMO>COMPRA CARTAO MAESTRO              27/11 EMPORIO DO MORA    
+                    </STMTTRN>
+                    <STMTTRN>
+                        <TRNTYPE>OTHER
+                        <DTPOSTED>20121127000000[-3:GMT]
+                        <TRNAMT>            -30,00
+                        <FITID>00373163
+                        <CHECKNUM>00373163
+                        <PAYEEID>0
+                        <MEMO>COMPRA CARTAO MAESTRO              27/11 A POSTO TIENCON    
+                    </STMTTRN>
+                    <STMTTRN>
+                        <TRNTYPE>OTHER
+                        <DTPOSTED>20121127000000[-3:GMT]
+                        <TRNAMT>             -5.75
+                        <FITID>00090112
+                        <CHECKNUM>00090112
+                        <PAYEEID>0
+                        <MEMO>JUROS SALDO UTILIZ ATE LIMITE      PERIODO: 27/10 A 26/11/12
+                    </STMTTRN>
+                    <STMTTRN>
+                        <TRNTYPE>OTHER
+                        <DTPOSTED>20121130000000[-3:GMT]
+                        <TRNAMT>            -31.33
+                        <FITID>00403463
+                        <CHECKNUM>00403463
+                        <PAYEEID>0
+                        <MEMO>COMPRA CARTAO MAESTRO              30/11 RESTAURANTE SAL    
+                    </STMTTRN>
+                    <STMTTRN>
+                        <TRNTYPE>OTHER
+                        <DTPOSTED>20121130000000[-3:GMT]
+                        <TRNAMT>            -22.19
+                        <FITID>00465463
+                        <CHECKNUM>00465463
+                        <PAYEEID>0
+                        <MEMO>COMPRA CARTAO MAESTRO              30/11 SONDA SUPERMERC    
+                    </STMTTRN>
+                    <STMTTRN>
+                        <TRNTYPE>OTHER
+                        <DTPOSTED>20121130000000[-3:GMT]
+                        <TRNAMT>             -9.25
+                        <FITID>00070663
+                        <CHECKNUM>00070663
+                        <PAYEEID>0
+                        <MEMO>COMPRA CARTAO MAESTRO              30/11 PANIFICADORA E     
+                    </STMTTRN>
+                </BANKTRANLIST>
+                <LEDGERBAL>
+                    <BALAMT>            383.62
+                    <DTASOF>20121201210409[-3:GMT]
+                </LEDGERBAL>
+            </STMTRS>
+        </STMTTRNRS>
+    </BANKMSGSRSV1>
+</OFX>

@@ -1,0 +1,47 @@
+<html>
+
+<head>
+
+<script src="funcoes.js"></script>
+<link rel="StyleSheet" href="style.css" type="text/css">
+
+<SCRIPT LANGUAGE="JavaScript">
+	function BntOkClick(){		
+		LeituraMemoriaFiscalData(window.edDataInicial.value,window.edDataFinal.value);
+	}	
+	function SetaFoco(){
+		window.edDataInicial.focus();
+	}
+</SCRIPT>
+
+</head>
+
+<body topmargin="0" leftmargin="0" onload="SetaFoco()">
+
+	<table border="0" cellpadding="0" cellspacing="0" width="889"
+		height="100">
+		<tr>
+			<td width="887" class="title1" height="55">Leitura da Mem�ria
+				Fiscal por Datas</td>
+		</tr>
+		<tr>
+			<td class="text" height="52" width="535">Data Inicial:<br>
+				<input type="text" name="edDataInicial" size="41" class="text2">
+				<br>Data Final:<br> <input type="text" name="edDataFinal"
+				size="41" class="text2">
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="52" width="535"><input type="button"
+				value="OK" name="B3" class="Buttom" onClick="BntOkClick()">&nbsp;
+				<input type="button" value="Cancelar" name="B4" class="Buttom"
+				onClick="javascript: window.location.href='principal.htm';">
+
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+CREATE TABLE `lancamento` (
+  `nCdLancamento` int(11) NOT NULL AUTO_INCREMENT,
+  `nCdContaCorrente` int(11) DEFAULT NULL,
+  `nCdContaContabil` int(11) DEFAULT NULL,
+  `cIdBanco` varchar(255) DEFAULT NULL,
+  `dLancamento` datetime DEFAULT NULL,
+  `cDescricao` varchar(255) DEFAULT NULL,
+  `nValor` double DEFAULT NULL,
+  `nCdContaPR` int(11) DEFAULT NULL,
+  `cObs` varchar(8000) DEFAULT NULL,
+  `bConciliado` tinyint(1) DEFAULT NULL,
+  `nCdLancamentoPai` int(11) DEFAULT NULL,
+  PRIMARY KEY (`nCdLancamento`),
+  KEY `fk_lancamento_conta_corrente` (`nCdContaCorrente`),
+  KEY `fk_lancamento_conta_contabil` (`nCdContaContabil`),
+  KEY `fk_lancamento_conta_pr` (`nCdContaPR`),
+  KEY `fk_lancamento_pai` (`nCdLancamentoPai`),
+  CONSTRAINT `fk_lancamento_conta_contabil` FOREIGN KEY (`nCdContaContabil`) REFERENCES `conta_contabil` (`nCdContaContabil`),
+  CONSTRAINT `fk_lancamento_conta_corrente` FOREIGN KEY (`nCdContaCorrente`) REFERENCES `conta_corrente` (`nCdContaCorrente`),
+  CONSTRAINT `fk_lancamento_conta_pr` FOREIGN KEY (`nCdContaPR`) REFERENCES `conta_pr` (`nCdContaPR`),
+  CONSTRAINT `fk_lancamento_pai` FOREIGN KEY (`nCdLancamentoPai`) REFERENCES `lancamento` (`nCdLancamento`)
+)

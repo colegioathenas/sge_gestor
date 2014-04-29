@@ -1,0 +1,164 @@
+
+<html>
+
+<head>
+<title>Mizu WebPhone</title>
+</head>
+
+
+<body>
+	<p>
+		<b> <a href="http://www.mizu-voip.com/"> Mizu-WebPhone deploy
+				example </a>
+		</b>
+	</p>
+
+
+	<p>
+		<i>This example use the toolkit deployment method and also the
+			javascript api. Tested on windows, linux, max, firefox and safari.</i>
+	</p>
+	<p>
+		<i>Modify the source code of this html page after your needs. For
+			example hide the applet, change applet parameters, design, etc</i>
+	</p>
+
+
+	<h2>Html buttons driving the applet with it's java script API:</h2>
+
+
+	<SCRIPT LANGUAGE="javascript">
+   var applethandle = null;
+   var webphoneStatus = null;
+
+  function displaystatus(statustr)
+  {
+      if (webphoneStatus == null) {
+           try{ webphoneStatus =  document.getElementById('webphoneStatus');  } catch (e) { }    
+        }
+     try{ webphoneStatus.innerHTML += statustr+'<br />'; } catch (e) { }  
+  }
+
+  function initcheck()
+  {                 
+        if (applethandle == null) 
+        {                            
+            displaystatus('JAVASCRIPT SAY: webphone init');
+
+            try{ applethandle =  document.getElementById('webphone'); } catch (e) { }  
+                
+            if(applethandle == null)
+            {
+              var applets = null;            
+              try{
+              applets = document.applets; 
+
+              // Needed for FireFox
+              if (applets.length == 0) {
+                  applets = document.getElementsByTagName("object");
+              }
+              if (applets.length == 0) {
+                  applets = document.getElementsByTagName("applet");
+              }
+
+              //Find the active applet object
+              for (var i = 0; i < applets.length; ++i) {
+                  try {
+                    if (typeof (applets[i].API_Call) != "undefined") {
+                        applethandle = applets[i];
+                        break;
+                     }
+                  } catch (e) { }
+              }
+              } catch (e) { }  
+         
+              if (applethandle == null) try{ applethandle = document.applets[0];  } catch (e) { }  
+
+              if (applethandle == null) {
+                  displaystatus('JAVASCRIPT SAY: cannot get applet handle'); 
+              }
+            }
+
+            if (applethandle != null) 
+            {              
+              // See if we're using the old Java Plug-In and the JNLPAppletLauncher
+              try {
+                 applethandle = applethandle.getSubApplet();
+              } catch (e) {
+                  // Using new-style applet -- ignore
+              }
+            }          
+        }               
+  }
+
+
+   function webphonetojs(varr)
+    {
+        var eventNotify = '' + varr; 
+        displaystatus('WEBPHONE SAY: '+eventNotify);
+    }
+
+
+    function voipRegister(username, password)
+    {
+        initcheck();        
+        displaystatus('JAVASCRIPT SAY: register');
+        applethandle.API_Register("", username, password);  	
+    }
+
+    function voipCall(number)
+    {
+        initcheck();
+        displaystatus('JAVASCRIPT SAY: call');
+        applethandle.API_Call(-1, number); 
+    }
+
+    function voipHangup()
+    {
+        initcheck();
+        displaystatus('JAVASCRIPT SAY: hangup');
+        applethandle.API_Hangup(-2); 	
+    }
+    
+</SCRIPT>
+
+
+	<input type=button value='Register'
+		onClick='voipRegister("USERNAME","PASSWORD")'>
+	<input type=button value='Call' onClick='voipCall("NUMBERTOCALL")'>
+	<input type=button value='Hangup' onClick='voipHangup()'>
+
+	<p></p>
+	<p></p>
+	<h2>Activity monitor:</h2>
+	<div id="webphoneStatus"></div>
+
+
+
+	<h2>Applet screen:</h2>
+
+	<script src="http://www.java.com/js/deployJava.js"></script>
+	<script> 
+        var attributes = { id:'webphone', code:'webphone.webphone.class', name: 'webphone', archive: 'webphone.jar', codebase: '.',  width:300, height:330, MAYSCRIPT:true } ; 
+        var parameters = {
+serveraddress: 'yoursipdomain.com', 
+JAVA_CODEBASE: '.',
+username: 'USERNAME',
+MAYSCRIPT: 'true',
+mayscript: 'yes',
+scriptable: 'true',
+jsscriptevent: '2',
+autocfgsave: '0',
+classloader_cache: false
+        
+} ;         
+     deployJava.runApplet(attributes, parameters, '1.5'); 
+    </script>
+
+</body>
+
+
+</html>
+
+
+

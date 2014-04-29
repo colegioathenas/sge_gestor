@@ -1,0 +1,42 @@
+<html>
+
+<head>
+<link rel="StyleSheet" href="style.css" type="text/css">
+<script src="funcoes.js"></script>
+
+<SCRIPT LANGUAGE="JavaScript">
+	function BntOkClick(){		
+		ProgramaMoedaSingular(window.edMoeda.value);
+	}	
+	function SetaFoco(){
+		window.edMoeda.focus();
+	}
+</SCRIPT>
+
+</head>
+
+<body topmargin="0" leftmargin="0" onload="SetaFoco()">
+
+	<table border="0" cellpadding="0" cellspacing="0" width="889"
+		height="100">
+		<tr>
+			<td width="887" colspan="2" class="title1" height="55">Programa��o
+				da Moeda</td>
+		</tr>
+		<tr>
+			<td class="text" height="52" width="288">Nome da moeda no
+				singular<br> <input type="text" name="edMoeda" size="41"
+				class="text2">
+			</td>
+			<td valign="middle" class="text" width="597"><input
+				type="button" value="OK" name="B3" class="Buttom"
+				onClick="BntOkClick()"><br> <input type="button"
+				value="Cancelar" name="B4" class="Buttom"
+				onClick="javascript: window.location.href='principal.htm';">
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

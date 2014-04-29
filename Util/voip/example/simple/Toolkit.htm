@@ -1,0 +1,36 @@
+<!-- 
+  Deploy the applet using the the Deployment Toolkit.  This should be the preferred method over the old applet and object tags.
+  More help: http://java.sun.com/docs/books/tutorial/deployment/deploymentInDepth/runAppletFunction.html
+-->
+
+
+
+<html>
+
+<head>
+<title>Mizu WebPhone</title>
+</head>
+
+<body>
+	<p>
+		<b>Mizu-WebPhone Test Demo</b>
+	</p>
+
+	<script src="http://www.mizu-voip.com/webphonedeploy.js"></script>
+	<script> 
+        var attributes = { code:'webphone.webphone.class', name: 'webphone', archive: 'webphone.jar', codebase: '.',  width:300, height:330} ; 
+        var parameters = {serveraddress: 'yoursipdomain.com', username: 'USERNAME' } ; 
+        deployJava.runApplet(attributes, parameters, '1.5'); 
+    </script>
+
+
+	<p>
+		<a href="http://www.mizu-voip.com/">Mizutech VoIP</a>
+	</p>
+</body>
+
+
+</html>
+
+
+

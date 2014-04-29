@@ -1,0 +1,63 @@
+<
+style type ="text/css" >.outros {
+	border-right: #ffffff 1px ridge;
+	border-top: #ffffff 1px ridge;
+	font-size: 13px;
+	border-left: #ffffff 1px ridge;
+	cursor: hand;
+	color: white;
+	border-bottom: #ffffff 1px ridge;
+	font-family: Tahoma;
+	background-color: #3171b5;
+	text-align: left;
+}
+
+.outros_click {
+	border-right: #555555 1px solid;
+	border-top: #555555 1px solid;
+	font-size: 13px;
+	border-left: #555555 1px solid;
+	cursor: hand;
+	color: white;
+	border-bottom: #555555 1px solid;
+	font-family: "tahoma";
+	background-color: #65a1ff;
+	text-align: left;
+}
+
+.outros_over {
+	border-right: #333333 1px solid;
+	border-top: #333333 1px solid;
+	font-size: 13px;
+	border-left: #333333 1px solid;
+	cursor: hand;
+	color: white;
+	border-bottom: #333333 1px solid;
+	font-family: "tahoma";
+	background-color: #89b3fe;
+	text-align: left;
+}
+
+.tabela {
+	filter: alpha();
+	background-color: #000000;
+	visibility: hidden;
+	position: absolute;
+	color: #FFFFFF;
+	border: 0px;
+	text-align: left;
+}
+
+.FirsMenu {
+	BORDER-TOP: 0px;
+	FILTER: alpha();
+	LEFT: 0px;
+	BORDER-LEFT: 0px;
+	BORDER-BOTTOM: 0px;
+	FONT-FAMILY: tahoma;
+	POSITION: absolute;
+	TOP: 50px;
+}
+</
+style
+>

@@ -1,0 +1,48 @@
+<html>
+
+<head>
+
+<script src="funcoes.js"></script>
+<link rel="StyleSheet" href="style.css" type="text/css">
+
+<SCRIPT LANGUAGE="JavaScript">
+	function BntOkClick(){		
+		EfetuaFormaPagamentoDescricaoForma(window.edFormaPagamento.value,window.edValor.value,window.edTextoOpcional.value);
+	}	
+	function SetaFoco(){
+		window.edFormaPagamento.focus();
+	}
+</SCRIPT>
+
+</head>
+
+<body topmargin="0" leftmargin="0" onload="SetaFoco()">
+
+	<table border="0" cellpadding="0" cellspacing="0" width="889"
+		height="100">
+		<tr>
+			<td width="887" class="title1" height="55">Efetua Forma
+				Pagamento com Texto Opcional</td>
+		</tr>
+		<tr>
+			<td class="text" height="52" width="535">Descri��o da forma de
+				pagamento:<br> <input type="text" name="edFormaPagamento"
+				size="41" class="text2"> <br>Valor:<br> <input
+				type="text" name="edValor" size="41" class="text2"> <br>Texto
+				Opcional:<br> <input type="text" name="edTextoOpcional"
+				size="41" class="text2">
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="52" width="535"><input type="button"
+				value="OK" name="B3" class="Buttom" onClick="BntOkClick()">&nbsp;
+				<input type="button" value="Cancelar" name="B4" class="Buttom"
+				onClick="javascript: window.location.href='principal.htm';">
+
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

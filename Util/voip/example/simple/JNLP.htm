@@ -1,0 +1,36 @@
+<!-- 
+  Deploy the applet using JNLP. (Only for JRE 1.6.0 or higher)   This should be the preferred method if you are using new java versions.
+  For customization open the webphone.jnlp file with a text editor.
+  More help: http://java.sun.com/docs/books/tutorial/deployment/applet/deployingApplet.html
+-->
+
+<html>
+
+<head>
+<title>Mizu WebPhone</title>
+</head>
+
+<body>
+	<p>
+		<b>Mizu-WebPhone Test Demo</b>
+	</p>
+
+	<script src="http://www.java.com/js/deployJava.js"></script>
+	<script> 
+        var attributes = { code:'webphone.webphone.class',  width:300, height:330} ; 
+        var parameters = {jnlp_href: 'http://www.mizu-voip.com/webphone.jnlp', classloader_cache:false } ; 
+        deployJava.runApplet(attributes, parameters, '1.5'); 
+    </script>
+
+
+	<p>
+		<a href="http://www.mizu-voip.com/">Mizutech VoIP</a>
+	</p>
+</body>
+
+
+
+
+
+
+</html>

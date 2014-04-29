@@ -1,0 +1,34 @@
+<?php
+	require("../config.php");
+	include_once "../bd.php";
+	include_once "../geral.php";
+	include_once "../Util/gravar_comunicacao.php";
+	ini_set( "display_errors",0	);
+	$cpf = $_REQUEST['cpf'];
+	
+	$cpf = str_replace(".","",$cpf);
+	$cpf = str_replace("-","",$cpf);
+	
+	$query = "SELECT distinct * FROM Pessoa_Telefone where nCdPessoa = $cpf";
+	
+	$telefones = consulta('athenas', $query);
+	
+	echo "<table class='tbGrid'>";
+	foreach($telefones as $telefone){
+		$ddd = $telefone['nDDD'];
+		$tel = $telefone['nTelefone'];
+	//	if ( substr($tel,0,1) == "9" ){
+                    $sms = "<td> <a href='' name='enivarsms' telefone='$ddd$tel'><img src='/image/icon_sms.png'></a></td>";
+         //       }else{
+         //           $sms = "<td></td>";
+       //         }
+                
+		echo "<tr>
+		<td width='50px'>$ddd</td>
+		<td width='150px'>$tel</td>
+                    $sms
+		</tr>";
+	}
+	echo "</table>";
+	
+?>

@@ -1,0 +1,66 @@
+<html>
+
+<head>
+<link rel="StyleSheet" href="style.css" type="text/css">
+<script src="funcoes.js"></script>
+
+<SCRIPT LANGUAGE="JavaScript">
+	function BntOkClick(){				
+		RecebimentoNaoFiscal(window.edIndiceRecebimento.value,window.edValorRecebimento.value,window.edFormaPagamento.value);				  			
+	}	
+	function SetaFoco(){
+		window.edIndiceRecebimento.focus();
+	}
+</SCRIPT>
+
+</head>
+
+<body topmargin="0" leftmargin="0" onload="SetaFoco()">
+
+	<table border="0" cellpadding="0" cellspacing="0" width="889"
+		height="128">
+		<tr>
+			<td width="887" class="title1" height="55" colspan="2">Recebimento
+				N�o Fiscal</td>
+		</tr>
+		<tr>
+			<td class="text" height="14" width="159" valign="middle" align="left">�ndice
+				do Recebimento:</td>
+			<td class="text" height="14" width="730" valign="top" align="left"><input
+				type="text" name="edIndiceRecebimento" size="20" class="text2">
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="14" width="159" valign="middle" align="left">Valor
+				do Recebimento:</td>
+			<td class="text" height="14" width="730" valign="top" align="left"><input
+				type="text" name="edValorRecebimento" size="20" class="text2">
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="14" width="159" valign="middle" align="left">Forma
+				de Pagamento:</td>
+			<td class="text" height="14" width="730" valign="top" align="left"><input
+				type="text" name="edFormaPagamento" size="20" class="text2">
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="13" width="159" valign="middle" align="left">
+			</td>
+			<td class="text" height="13" width="730" valign="top" align="left">
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="52" width="885" colspan="2"><input
+				type="button" value="OK" name="B3" class="Buttom"
+				onClick="BntOkClick()"> <input type="button"
+				value="Cancelar" name="B4" class="Buttom"
+				onClick="javascript: window.location.href='principal.htm';">
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

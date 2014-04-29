@@ -1,0 +1,1119 @@
+
+<!-- saved from url=(0048)http://www3.dataprev.gov.br/CWS/BIN/imagem91.asp -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script language="JavaScript">parent.erroconfere = "";parent.exibeErro = "";</script>
+<script language="JavaScript">
+var vnome = 'ANTONIO DE OLIVEIRA FILHO               ';
+var vcpf  = '012346922-87'.replace("-","");
+
+var nome1 = vnome.substr(0,vnome.indexOf(" ")).toUpperCase();						// nome do grande porte
+var nome2 = parent.RAIZ_NOME.substr(0,parent.RAIZ_NOME.indexOf(" ")).toUpperCase();	// nome digitado
+
+if (vcpf!=parent.RAIZ_CPF && nome1!=nome2) {
+	parent.erro = "O nome e/ou CPF informado(s) não pertence(m) a esse benefício.";
+	location.href = "../contexto/HISCRE/hiscrenet2.asp";
+}
+</script>
+<script language="JavaScript">
+
+//  ------------------------------------------------------------------
+//     TITULO : BPVT0311
+//  DESCRICAO : CONSULTA DO ÚLTIMO HISTÓRICO DE CRÉDITOS - DETALHAMENTO DE CRÉDITO - INTERNET
+//    CRIACAO : 05/06/06
+//  ALTERACAO : 12/07/06
+//    ORIGENS : HISCRENET2.ASP
+//   DESTINOS : HISCRENET2.ASP
+//  CONTEXTOS : HISCRE
+//  --------------------------------------------------------------------
+
+//CAMPOS DA TELA - SADS
+var ns = (document.layers)? true:false;
+var ie = (document.all)? true:false;
+if (ns) document.captureEvents(Event.MOUSEDOWN || Event.CLICK);
+document.onclick = sourcecodeprotect;
+document.onmousedown = sourcecodeprotect;
+
+// ***********************************************************
+function sourcecodeprotect(e) {
+  if (ns&&(e.which==3)) return false;
+  else if (ie&&(window.event.button==2)) 
+     alert("Não é permitido o uso do botão direito.");
+  else return true;
+  }
+
+//***********************************************************
+function cleanup() {
+  if (ns) document.releaseEvents(Event.MOUSEDOWN || Event.CLICK);
+  }
+
+var tlatrs 			= 'BPV03&#38;11'; // campo origem: TLATRS(8)
+var tladthc 		= '15/06/2013  11:50:49'; // campo origem: TLADTHC(20)
+
+var nb 				= '118.900.521-0'; // campo origem: BENNU(999.999.999-9)
+var nbf = '';
+nbf = nb.replace(/&#38;/g,".");
+
+var nome			= 'ANTONIO DE OLIVEIRA FILHO   '; // campo origem: RECNM(28)
+var especie 		= ' 42'; // campo origem: 	BENCSESPEC(3)
+var descespecie 	= 'APOSENTADORIA POR TEMPO DE CONTRIBUICAO '; // campo origem: BENCSESPEC-1(40)
+var pal				= '         '; //campo origem: PALCS(9)
+var competencia		= '05/2013'; //campo origem: CRED2COMPET(99/9999)
+var periodoinicial	= '01/05/2013'; //campo origem: PERD2INI(99/99/9999)
+var periodofinal	= '31/05/2013'; //campo origem: PERD2FIM(99/99/9999)
+var meiopagto		= 'CCF'; //campo origem: MPGCS(3)
+var oml				= '25.0.01.010'; //campo origem: OLSIDMANUT(99.9.99.999)
+var datadispinicial	= '03/06/2013'; //campo origem: CRED2INIVAL(99/99/9999)
+var datadispfinal	= '03/08/2013'; //campo origem: CRED2FIMVAL(99/99/9999)
+var dataCalcCredito	= '07/05/2013'; //campo origem: CRED2MOVIM(99/99/9999)
+var origem			= 'MACICA     '; //campo origem: CRECSORIGEM(11)
+var datapagto		= '03/06/2013'; //campo origem: PAGD2CRED(99/99/9999)
+var contacorrente	= '0000227749'; //campo origem: BCCNUCTACOR(10)
+var retorno1		= 'PAGAMENTO EFETIVADO        ' //campo origem: PAGCSOCORR(27)
+var retorno2		= 'Arq:'; //campo origem: TRACO-2(4)
+var retorno3		= '000167 '; //campo origem: CRENUSERFIT(7)
+var retorno4		= 'Seq:'; //campo origem: TRACO-1(4)
+var retorno5		= '5645456'; //campo origem: CRENUSEQARQ(7)
+var banco			= 'BRASIL         '; //campo origem: BANID(15)
+var codbanco		= '496637'; //campo origem: OPGID(6)
+var agencia			= 'SHOPPING MACAPA                         ';	//campo origem: OPGID-1(40)
+var enderecobanco	= 'RUA LEOPOLDO MACHADO 2334 2 ANDAR                      '; //campo origem: OPGID-2(55)
+if (enderecobanco  == '                                                       ')
+	enderecobanco = 'NÃO INFORMADO.';
+
+function Trim(valor)
+{
+  var novoValor = '';
+  for( i = 0; i < valor.length; i++) {
+    if (valor.substring(i, i+1) != ' ')
+      novoValor += valor.substring(i, i+1);
+  }
+  return novoValor;
+}
+
+function TraduzEspecie(meiopagto)
+{
+  if (meiopagto == 'CMG')
+     return 'CARTAO MAGNETICO';
+  else if (meiopagto == 'APB')
+     return 'CUPOM';
+  else if (meiopagto == 'CCF')
+     return 'CONTA CORRENTE';
+  else if (meiopagto == 'CCL')
+     return 'CONTA CORRENTE';
+  else if (meiopagto == 'PAB')
+     return 'ALTERNATIVO';
+  else if (meiopagto == 'CPB')
+     return 'CHEQUE';
+  else if (meiopagto == 'OPB')
+     return 'ORDEM DE PAGTO';
+  else if (meiopagto == 'RPB')
+     return 'RECIBO DE PAGTO';
+  else if (meiopagto == 'AP ')
+     return 'AUTORIZACAO';
+}
+
+function CriaArray (n) { 
+	this.length = n 
+	for (var i = 1 ; i <= n ; i++) 
+		{ this[i] = "" } 
+} 
+
+function ImprimeCreditoDebito(arrDados) {
+	for (var i = 1 ; i <= 18 ; i++) {
+  		document.write (arrDados[i]);
+	}	
+}
+
+{
+  document.write('<html>');
+
+  document.write('<head>');
+  document.write('<title> Detalhamento de Crédito </title>');
+  document.write('</head>');
+
+  document.write('<body alink="#0000ff" background="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/fnada.gif" bgcolor="#ffffff" link="#004080" onunload="cleanup()"');
+  document.write('text="#000000" vlink="#ff0000" topMargin=0 marginheight="0" marginwidth="0" >');
+
+  document.write('<!-- topo azul MPAS -->');
+  document.write('<TABLE border=0 cellPadding=0 cellSpacing=0 height=70 width="100%" name="topo"><TBODY>');
+  document.write('  <TR bgColor=#065ca5>');
+  document.write('    <TD align=left vAlign=top>');
+  document.write('      <TABLE border=0 cellPadding=0 cellSpacing=0>');
+  document.write('        <TBODY>');
+  document.write('        <TR>');
+  document.write('          <TD align=left vAlign=top><A href="http://www.mpas.gov.br/"><IMG ');
+  document.write('            border=0 height=70 ');
+  document.write('            src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/KO.gif" ');
+  document.write('            width=94></A></TD>');
+  document.write('          <TD align=left vAlign=top><BR><A href="http://www.mpas.gov.br/"><IMG ');
+  document.write('            border=0 height=41 ');
+  document.write('            src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/previdencia.gif" ');
+  document.write('            width=290></A></TD></TR></TBODY></TABLE></TD>');
+  document.write('    <TD align=right vAlign=top><A href="http://www.redegoverno.gov.br/"><IMG ');
+  document.write('      border=0 height=70 hspace=0 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/prevnet.gif" ');
+  document.write('      width=139></A></TD></TR></TBODY></TABLE>');
+
+  document.write('<center><font face="Trebuchet MS" color=#065ca5><h2 align="center">Detalhamento de Crédito</h2>');
+
+  document.write('<table border="1" width="69%" height="1">');
+  document.write('  <tr>');
+  document.write('    <td width="30%" align="center" bgcolor="#C0C0C0" height="1" valign="top"><p align="left"><small><small><font');
+  document.write('    face="Trebuchet MS">Número do Benefício</font></small></small></td>');
+  document.write('    <td width="70%" align="center" bgcolor="#C0C0C0" height="1" valign="top"><p align="left"><small><small><font');
+  document.write('    face="Trebuchet MS">Nome do Segurado</font></small></small></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td width="30%" align="center" height="24"><p align="center"><strong><font');
+  document.write('    face="Trebuchet MS">' + nbf + '</font></strong></td>');
+  document.write('    <td width="70%" align="center" height="24"><p align="left"><strong><font');
+  document.write('    face="Trebuchet MS">' + nome + '</font></strong></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%" height="1">');
+  document.write('  <tr>');
+  document.write('    <td width="16%" bgcolor="#C0C0C0" height="1" valign="top"><small><small><font');
+  document.write('    face="Trebuchet MS">Competência</font></small></small></td>');
+  document.write('    <td width="42%" bgcolor="#C0C0C0" height="1" valign="top"><small><small><font');
+  document.write('    face="Trebuchet MS">Período a que se refere o crédito :</font></small></small></td>');
+  document.write('    <td width="38%" bgcolor="#C0C0C0" height="1" valign="top"><small><small><font');
+  document.write('    face="Trebuchet MS">Pagamento através de :</font></small></small></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td width="16%" height="22"><p align="center"><strong><font face="Trebuchet MS">' + competencia + '</font></strong></td>');
+  document.write('    <td width="18%" height="22"><p align="center"><strong><font face="Trebuchet MS">' + periodoinicial + '</font></strong></td>');
+  document.write('    <td width="5%" height="22"><p align="center"><font face="Trebuchet MS">a</font></td>');
+  document.write('    <td width="20%" height="22"><p align="center"><strong><font face="Trebuchet MS">' + periodofinal + '</font></strong></td>');
+  document.write('    <td width="42%" height="22" valign="top"><p align="left"><strong><font face="Trebuchet MS">' + TraduzEspecie(meiopagto) + '</font></strong></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+// Inclusão do Campo Espécie
+
+  document.write('<table border="1" width="69%" height="23">');
+  document.write('  <tr>');
+  document.write('    <td width="100%" bgcolor="#C0C0C0" height="6" valign="top" align="left" checked="false"><small><font');
+  document.write('    face="Trebuchet MS"><small>Espécie</small></font></small></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td width="10%" height="9"><p align="left"><strong><font face="Trebuchet MS">' + especie + '</font></strong></td>');
+  document.write('    <td width="70%" height="9"><strong><font face="Trebuchet MS">' + descespecie + '</font></strong></td>');
+  document.write('    <td width="20%" height="9"><p align="center"><strong><font face="Trebuchet MS">' + pal + '</font></strong></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%" height="14">');
+  document.write('  <tr>');
+  document.write('    <td width="21%" bgcolor="#C0C0C0" height="2" valign="top"><p align="left"><small><small><font');
+  document.write('    face="Trebuchet MS">Banco</font></small></small></td>');
+  document.write('    <td width="54%" bgcolor="#C0C0C0" height="2" valign="top"><small><small><font');
+  document.write('    face="Trebuchet MS">Agência bancária</font></small></small></td>');
+  document.write('    <td width="25%" bgcolor="#C0C0C0" height="2" valign="top"><p align="center"><small><small><font');
+  document.write('    face="Trebuchet MS">Código do Banco</font></small></small></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td width="21%" height="9"><p align="left"><strong><font face="Trebuchet MS">' + banco + '</font></strong></td>');
+  document.write('    <td width="54%" height="9"><strong><font face="Trebuchet MS">' + agencia + '</font></strong></td>');
+  document.write('    <td width="25%" height="9"><p align="center"><strong><font face="Trebuchet MS">' + codbanco + '</font></strong></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%" height="23">');
+  document.write('  <tr>');
+  document.write('    <td width="64%" bgcolor="#C0C0C0" height="6" valign="top" align="left" checked="false"><small><font');
+  document.write('    face="Trebuchet MS"><small>Endereço do banco</small></font></small></td>');
+  document.write('    <td width="36%" bgcolor="#C0C0C0" height="6" valign="top" align="left" checked="false"><small><font');
+  document.write('    face="Trebuchet MS"><small>Disponível para recebimento de :</small></font></small></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td width="65%" height="5"><small><strong><font face="Trebuchet MS">' + enderecobanco + '</font></strong></small></td>');
+  document.write('    <td width="15%" height="5" style="border: 1px solid"><p align="center"><strong><font');
+  document.write('    face="Trebuchet MS">' + datadispinicial + ' </font></strong></td>');
+  document.write('    <td width="5%" height="5" style="border: 1px solid"><font face="Trebuchet MS"><p');
+  document.write('    align="center">a</font></td>');
+  document.write('    <td width="17%" height="5" style="border: 1px solid"><font face="Trebuchet MS"><p');
+  document.write('    align="center"><strong>' + datadispfinal + '</strong></font></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+  document.write('<small><font face="Trebuchet MS">');
+  document.write('<table border="1" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td height="18" bgcolor="#C0C0C0" colspan="2"><p align="center"><small><strong><font');
+  document.write('    face="Trebuchet MS">C R É D I T O S </font></strong></small></td>');
+  document.write('  </tr>');
+  document.write('  <tr>');
+  document.write('    <td width="366" height="18"><p align="center"><font face="Trebuchet MS"><strong>Descrição das Rubricas</strong></font></td>');
+  document.write('    <td width="145" height="18"><p align="center"><font face="Trebuchet MS"><strong>Valor</font></strong></td>');
+  document.write('  </tr>');
+
+}
+
+var rubrica, linha;
+var CabecDebito = true;
+arrCreditos = new CriaArray(18);
+arrDebitos = new CriaArray(18);
+
+//imprime 1ª Rubrica
+rubrica 	= '101'; //campo origem: RUBCS(3)
+descrub 	= 'Mens. reajustada'; //campo origem: DESCRUB(16)
+vlrub		= '      2.274,33'; //campo origem: RUBVL(9999999.999,99)
+sinal		= '+'; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+  {
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[1] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+  
+	arrCreditos[1] = linha;
+  	//document.write (linha);
+  }
+}
+
+//imprime 2ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+	{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[2] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[2] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 3ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[3] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[3] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 4ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[4] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[4] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 5ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[5] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[5] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 6ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[6] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[6] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 7ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[7] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[7] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 8ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[8] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[8] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 9ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[9] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[9] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 10ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[10] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[10] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 11ª rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[11] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[11] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 12ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+  {
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[12] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[12] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 13ª rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+  {
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[13] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[13] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 14ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[14] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[14] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 15ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[15] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[15] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 16ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[16] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[16] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 17ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[17] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[17] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 18ª Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[18] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[18] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+{
+	ImprimeCreditoDebito(arrCreditos);
+	document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D É B I T O S</small></strong></td></tr>');
+	ImprimeCreditoDebito(arrDebitos);
+}
+
+var valorbruto 		= '         2.274,33'; //campo origem: VALBRUTO(99.999.999.999,99)
+var valordesconto	= '             0,00'; //campo origem: VALDESC(99.999.999.999,99)
+var valorliquido	= '         2.274,33'; //campo origem: VALLIQ(99.999.999.999,99)
+
+{
+  document.write('</table>');
+  document.write('</font></small>');
+  document.write('<table border="1" width="69%" cellpadding="2">');
+  document.write('  <tr>');
+  document.write('    <td width="33%" align="center" bgcolor="#C0C0C0" style="font-family: Trebuchet MS"><strong>Valor Bruto </strong></td>');
+  document.write('    <td width="33%" align="center" bgcolor="#C0C0C0" style="font-family: Trebuchet MS"><strong>Valor&nbsp; dos');
+  document.write('    Descontos</strong></td>');
+  document.write('    <td width="34%" align="center" bgcolor="#C0C0C0" style="font-family: Trebuchet MS"><strong>Valor Líquido</strong></td>');
+  document.write('  </tr>');
+  document.write('  <tr>');
+  document.write('    <td width="33%" align="right"><strong><font face="Trebuchet MS">' + valorbruto + '</font></strong></td>');
+  document.write('    <td width="33%" align="right"><strong><font face="Trebuchet MS">' + valordesconto + '</font></strong></td>');
+  document.write('    <td width="34%" align="right"><strong><font face="Trebuchet MS">' + valorliquido + '</font></strong></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="0" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td width="100%"><p align="center"><u><strong><font face="Trebuchet MS" color=#065ca5>Este');
+  document.write('    extrato vale para simples conferência</font></strong></u></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+  document.write('');
+  document.write('<a href="JavaScript:location.href=\'../contexto/\' + parent.link"><img border="0" height="38" src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/ante.gif" width="120"></a>');
+  document.write('</center>');
+
+  document.write('<TABLE bgColor=#065ca5 border=0 cellPadding=0 cellSpacing=0 height=35 width="100%">');
+  document.write('  <TBODY>');
+  document.write('  <TR>');
+  document.write('    <TD align=left vAlign=top width="1%"><IMG border=0 height=62 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/esquerda3b.gif" ');
+  document.write('      width=70></TD>');
+  document.write('    <TD align=left width="60%"><IMG border=0 height=34 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/rodape_dtp.gif" ');
+  document.write('      width=93><BR><IMG alt="bluebottom2.gif (971 bytes)" height=10 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/bluebottom2.gif" ');
+  document.write('      width=42><IMG border=0 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/dtpextenso2d.gif"><BR></TD>');
+  document.write('    <TD align=right width="40%"><A ');
+  document.write('      href="mailto:webmaster.dtp@rjo.dataprev.gov.br" ');
+  document.write('      title="Fale com a DATAPREV"><IMG border=0 height=25 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/mailslot.gif" ');
+  document.write('      width=36></A></TD>');
+  document.write('    <TD align=right vAlign=top width="1%"><IMG border=0 height=62 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/padrao1girado.gif" ');
+  document.write('      width=70></TD></TR>');
+  document.write('  </TBODY>');
+  document.write('</TABLE>');
+  document.write('</body>');
+  document.write('</html>');
+
+}
+
+</script>
+<title>Detalhamento de Crédito</title>
+</head>
+<body alink="#0000ff" background="fnada.gif" bgcolor="#ffffff"
+	link="#004080" onunload="cleanup()" text="#000000" vlink="#ff0000"
+	topmargin="0" marginheight="0" marginwidth="0">
+	<!-- topo azul MPAS -->
+	<table border="0" cellpadding="0" cellspacing="0" height="70"
+		width="100%" name="topo">
+		<tbody>
+			<tr bgcolor="#065ca5">
+				<td align="left" valign="top">
+					<table border="0" cellpadding="0" cellspacing="0">
+						<tbody>
+							<tr>
+								<td align="left" valign="top"><a
+									href="http://www.mpas.gov.br/"><img border="0" height="70"
+										src="KO.gif" width="94"></a></td>
+								<td align="left" valign="top"><br>
+								<a href="http://www.mpas.gov.br/"><img border="0"
+										height="41" src="previdencia.gif" width="290"></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+				<td align="right" valign="top"><a
+					href="http://www.redegoverno.gov.br/"><img border="0"
+						height="70" hspace="0" src="prevnet.gif" width="139"></a></td>
+			</tr>
+		</tbody>
+	</table>
+	<center>
+		<font face="Trebuchet MS" color="#065ca5"><h2 align="center">Detalhamento
+				de Crédito</h2>
+			<table border="1" width="69%" height="1">
+				<tbody>
+					<tr>
+						<td width="30%" align="center" bgcolor="#C0C0C0" height="1"
+							valign="top"><p align="left">
+								<small><small><font face="Trebuchet MS">Número
+											do Benefício</font></small></small>
+							</p></td>
+						<td width="70%" align="center" bgcolor="#C0C0C0" height="1"
+							valign="top"><p align="left">
+								<small><small><font face="Trebuchet MS">Nome
+											do Segurado</font></small></small>
+							</p></td>
+					</tr>
+				</tbody>
+			</table>
+			<table border="1" width="69%">
+				<tbody>
+					<tr>
+						<td width="30%" align="center" height="24"><p align="center">
+								<strong><font face="Trebuchet MS">118.900.521-0</font></strong>
+							</p></td>
+						<td width="70%" align="center" height="24"><p align="left">
+								<strong><font face="Trebuchet MS">ANTONIO DE
+										OLIVEIRA FILHO </font></strong>
+							</p></td>
+					</tr>
+				</tbody>
+			</table>
+			<table border="1" width="69%" height="1">
+				<tbody>
+					<tr>
+						<td width="16%" bgcolor="#C0C0C0" height="1" valign="top"><small><small><font
+									face="Trebuchet MS">Competência</font></small></small></td>
+						<td width="42%" bgcolor="#C0C0C0" height="1" valign="top"><small><small><font
+									face="Trebuchet MS">Período a que se refere o crédito :</font></small></small></td>
+						<td width="38%" bgcolor="#C0C0C0" height="1" valign="top"><small><small><font
+									face="Trebuchet MS">Pagamento através de :</font></small></small></td>
+					</tr>
+				</tbody>
+			</table>
+			<table border="1" width="69%">
+				<tbody>
+					<tr>
+						<td width="16%" height="22"><p align="center">
+								<strong><font face="Trebuchet MS">05/2013</font></strong>
+							</p></td>
+						<td width="18%" height="22"><p align="center">
+								<strong><font face="Trebuchet MS">01/05/2013</font></strong>
+							</p></td>
+						<td width="5%" height="22"><p align="center">
+								<font face="Trebuchet MS">a</font>
+							</p></td>
+						<td width="20%" height="22"><p align="center">
+								<strong><font face="Trebuchet MS">31/05/2013</font></strong>
+							</p></td>
+						<td width="42%" height="22" valign="top"><p align="left">
+								<strong><font face="Trebuchet MS">CONTA CORRENTE</font></strong>
+							</p></td>
+					</tr>
+				</tbody>
+			</table>
+			<table border="1" width="69%" height="23">
+				<tbody>
+					<tr>
+						<td width="100%" bgcolor="#C0C0C0" height="6" valign="top"
+							align="left" checked="false"><small><font
+								face="Trebuchet MS"><small>Espécie</small></font></small></td>
+					</tr>
+				</tbody>
+			</table>
+			<table border="1" width="69%">
+				<tbody>
+					<tr>
+						<td width="10%" height="9"><p align="left">
+								<strong><font face="Trebuchet MS"> 42</font></strong>
+							</p></td>
+						<td width="70%" height="9"><strong><font
+								face="Trebuchet MS">APOSENTADORIA POR TEMPO DE
+									CONTRIBUICAO </font></strong></td>
+						<td width="20%" height="9"><p align="center">
+								<strong><font face="Trebuchet MS"> </font></strong>
+							</p></td>
+					</tr>
+				</tbody>
+			</table>
+			<table border="1" width="69%" height="14">
+				<tbody>
+					<tr>
+						<td width="21%" bgcolor="#C0C0C0" height="2" valign="top"><p
+								align="left">
+								<small><small><font face="Trebuchet MS">Banco</font></small></small>
+							</p></td>
+						<td width="54%" bgcolor="#C0C0C0" height="2" valign="top"><small><small><font
+									face="Trebuchet MS">Agência bancária</font></small></small></td>
+						<td width="25%" bgcolor="#C0C0C0" height="2" valign="top"><p
+								align="center">
+								<small><small><font face="Trebuchet MS">Código
+											do Banco</font></small></small>
+							</p></td>
+					</tr>
+				</tbody>
+			</table>
+			<table border="1" width="69%">
+				<tbody>
+					<tr>
+						<td width="21%" height="9"><p align="left">
+								<strong><font face="Trebuchet MS">BRASIL </font></strong>
+							</p></td>
+						<td width="54%" height="9"><strong><font
+								face="Trebuchet MS">SHOPPING MACAPA </font></strong></td>
+						<td width="25%" height="9"><p align="center">
+								<strong><font face="Trebuchet MS">496637</font></strong>
+							</p></td>
+					</tr>
+				</tbody>
+			</table>
+			<table border="1" width="69%" height="23">
+				<tbody>
+					<tr>
+						<td width="64%" bgcolor="#C0C0C0" height="6" valign="top"
+							align="left" checked="false"><small><font
+								face="Trebuchet MS"><small>Endereço do banco</small></font></small></td>
+						<td width="36%" bgcolor="#C0C0C0" height="6" valign="top"
+							align="left" checked="false"><small><font
+								face="Trebuchet MS"><small>Disponível para
+										recebimento de :</small></font></small></td>
+					</tr>
+				</tbody>
+			</table>
+			<table border="1" width="69%">
+				<tbody>
+					<tr>
+						<td width="65%" height="5"><small><strong><font
+									face="Trebuchet MS">RUA LEOPOLDO MACHADO 2334 2 ANDAR </font></strong></small></td>
+						<td width="15%" height="5" style="border: 1px solid"><p
+								align="center">
+								<strong><font face="Trebuchet MS">03/06/2013 </font></strong>
+							</p></td>
+						<td width="5%" height="5" style="border: 1px solid"><font
+							face="Trebuchet MS"></font>
+						<p align="center">
+								<font face="Trebuchet MS">a</font>
+							</p></td>
+						<td width="17%" height="5" style="border: 1px solid"><font
+							face="Trebuchet MS"></font>
+						<p align="center">
+								<font face="Trebuchet MS"><strong>03/08/2013</strong></font>
+							</p></td>
+					</tr>
+				</tbody>
+			</table>
+			<small><font face="Trebuchet MS"><table border="1"
+						width="69%">
+						<tbody>
+							<tr>
+								<td height="18" bgcolor="#C0C0C0" colspan="2"><p
+										align="center">
+										<small><strong><font face="Trebuchet MS">C
+													R É D I T O S </font></strong></small>
+									</p></td>
+							</tr>
+							<tr>
+								<td width="366" height="18"><p align="center">
+										<font face="Trebuchet MS"><strong>Descrição
+												das Rubricas</strong></font>
+									</p></td>
+								<td width="145" height="18"><p align="center">
+										<font face="Trebuchet MS"><strong>Valor</strong></font>
+									</p></td>
+							</tr>
+							<tr>
+								<td><small>Mens. reajustada</small></td>
+								<td align="right"><small> 2.274,33</small></td>
+							</tr>
+							<tr>
+								<td height="18" bgcolor="#C0C0C0" colspan="2"><p
+										align="center">
+										<strong><font face="Trebuchet MS"><small>D
+													É B I T O S</small></font></strong>
+									</p></td>
+							</tr>
+						</tbody>
+					</table></font></small>
+		<table border="1" width="69%" cellpadding="2">
+				<tbody>
+					<tr>
+						<td width="33%" align="center" bgcolor="#C0C0C0"
+							style="font-family: Trebuchet MS"><strong>Valor
+								Bruto </strong></td>
+						<td width="33%" align="center" bgcolor="#C0C0C0"
+							style="font-family: Trebuchet MS"><strong>Valor&nbsp;
+								dos Descontos</strong></td>
+						<td width="34%" align="center" bgcolor="#C0C0C0"
+							style="font-family: Trebuchet MS"><strong>Valor
+								Líquido</strong></td>
+					</tr>
+					<tr>
+						<td width="33%" align="right"><strong><font
+								face="Trebuchet MS"> 2.274,33</font></strong></td>
+						<td width="33%" align="right"><strong><font
+								face="Trebuchet MS"> 0,00</font></strong></td>
+						<td width="34%" align="right"><strong><font
+								face="Trebuchet MS"> 2.274,33</font></strong></td>
+					</tr>
+				</tbody>
+			</table>
+			<table border="0" width="69%">
+				<tbody>
+					<tr>
+						<td width="100%"><p align="center">
+								<u><strong><font face="Trebuchet MS"
+										color="#065ca5">Este extrato vale para simples
+											conferência</font></strong></u>
+							</p></td>
+					</tr>
+				</tbody>
+			</table>
+			<a href="JavaScript:location.href='../contexto/' + parent.link"><img
+				border="0" height="38" src="ante.gif" width="120"></a></font>
+	</center>
+	<table bgcolor="#065ca5" border="0" cellpadding="0" cellspacing="0"
+		height="35" width="100%">
+		<tbody>
+			<tr>
+				<td align="left" valign="top" width="1%"><img border="0"
+					height="62" src="esquerda3b.gif" width="70"></td>
+				<td align="left" width="60%"><img border="0" height="34"
+					src="rodape_dtp.gif" width="93"><br>
+				<img alt="bluebottom2.gif (971 bytes)" height="10"
+					src="bluebottom2.gif" width="42"><img border="0"
+					src="dtpextenso2d.gif"><br></td>
+				<td align="right" width="40%"><a
+					href="mailto:webmaster.dtp@rjo.dataprev.gov.br"
+					title="Fale com a DATAPREV"><img border="0" height="25"
+						src="mailslot.gif" width="36"></a></td>
+				<td align="right" valign="top" width="1%"><img border="0"
+					height="62" src="padrao1girado.gif" width="70"></td>
+			</tr>
+		</tbody>
+	</table>
+	<font face="Trebuchet MS" color="#065ca5"> </font>
+</body>
+</html>

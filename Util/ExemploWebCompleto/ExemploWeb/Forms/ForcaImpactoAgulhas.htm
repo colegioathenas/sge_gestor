@@ -1,0 +1,51 @@
+<html>
+
+<head>
+<link rel="StyleSheet" href="style.css" type="text/css">
+<script src="funcoes.js"></script>
+
+<SCRIPT LANGUAGE="JavaScript">
+	function BntOkClick(){		
+		if (window.ForcaAgulha[0].checked)
+			iForca = 1;
+		else
+			if (window.ForcaAgulha[1].checked)
+				iForca = 2;
+			else
+				iForca = 3;
+		ForcaImpactoAgulhas(iForca);
+	}	
+	function SetaFoco(){
+		window.BtnOK.focus();
+	}
+</SCRIPT>
+
+</head>
+
+<body topmargin="0" leftmargin="0" onload="SetaFoco()">
+
+	<table border="0" cellpadding="0" cellspacing="0" width="889"
+		height="100">
+		<tr>
+			<td width="887" colspan="2" class="title1" height="55">For�a de
+				impacto das Agulhas</td>
+		</tr>
+		<tr>
+			<td class="text" height="52" width="288">for�a:<br> <input
+				type="radio" value="Fraco" name="ForcaAgulha" checked>Fraco
+				<br>
+			<input type="radio" value="medio" name="ForcaAgulha">M�dio <br>
+			<input type="radio" value="forte" name="ForcaAgulha">Forte
+			</td>
+			<td valign="middle" class="text" width="597"><input
+				type="button" value="OK" name="BtnOK" class="Buttom"
+				onClick="BntOkClick()"><br> <input type="button"
+				value="Cancelar" name="B4" class="Buttom"
+				onClick="javascript: window.location.href='principal.htm';">
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

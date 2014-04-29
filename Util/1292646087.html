@@ -1,0 +1,26 @@
+<script language=JavaScript>parent.erroconfere = "";parent.exibeErro = "";</script>
+
+<script language=javascript>
+function fTrim(str){return str.replace(/^\s+|\s+$/g,"");}
+var vdata = "04/09/1965";
+var nomeR = "PAULO ROBERTO R CASSEB      ";
+var cpfR  = "689805319-15  ";
+var link  = parent.link;
+var nome1 = nomeR.substr(0,nomeR.indexOf(" ")).toUpperCase();				// nome do grande porte
+var nome2;
+var nome2 = (parent.NOME)?parent.NOME:parent.RAIZ_NOME;
+nome2 = nome2.substr(0,nome2.indexOf(" ")).toUpperCase();					// nome digitado
+var cpf = fTrim(cpfR.replace("-","").replace(".","").replace(".",""));		// CPF retornado
+if (cpf=="") cpf = "0";
+
+if (vdata!=parent.RAIZ_NASCIMENTO) {
+	parent.erroconfere = "A data de nascimento informada não pertence a esse benefício.";
+}else if (nome1 != nome2 || cpf !=((parent.CPF)?parent.CPF:parent.RAIZ_CPF)) {
+	parent.erroconfere = "O nome e/ou CPF informado(s) não pertence(m) a esse benefício.";
+}
+if (parent.erroconfere!="")
+	location.href = "../contexto/" + link;
+else{
+	location.href = "senha.asp?nb=1292646087&DataNascimento=04091965&SIW_Contexto=HISCRE&SIW_Transacao_Web=EXTRATO&SIW_Window=SISBEN&SIW_Layout=10%2C8&at=1&DiaNascimento=04&MesNascimento=09&AnoNascimento=1965&nome=PAULO+ROBERTO+R+CASSEB&cpf=68980531915&txtImagem=ibjo&hoje=Tue+Jul+16+03%3A47%3A15+UTC-0300+2013&entrada=91";
+}
+</script>

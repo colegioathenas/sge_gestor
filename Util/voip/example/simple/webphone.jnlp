@@ -1,0 +1,31 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="http://www.mizu-voip.com/" href="webphone.jnlp">
+    <information>
+        <title>Mizu Webphone demo</title>
+        <vendor>Mizutech</vendor>
+	<href>"http://www.mizu-voip.com/"</href>
+	<description>A VoIP client applet</description>
+        <description kind="short">VoIP client application to initiate phone calls over the internet.</description>
+    </information>
+    <resources>
+        <j2se version="1.4+"
+              href="http://java.sun.com/products/autodl/j2se" />
+        <jar href="http://www.mizu-voip.com/webphone.jar" main="true" />
+    </resources>
+    <applet-desc 
+         name="Mizu Webphone demo"
+         main-class="webphone.webphone"
+         width="300"
+         height="330">
+
+<param name = "serveraddress" value = "YOURSIPDOMAIN.COM"/>
+<param name = "username" value = "USERNAME"/>
+<param name = "password" value = "PASSWORD"/>
+<param name = "register" value = "true"/>
+<param name = "callto" value = "CALLED_PARTY_NUMBER"/>
+<param name = "call" value = "true"/>
+
+     </applet-desc>
+     <update check="background"/>
+</jnlp>	

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<formulario>
+	<containers>
+		<conteiner id='container1' nome='Cadastro'>
+			<campos>
+				<campo id='codigo'>
+					<nome>Codigo</nome>
+					<tipo>text</tipo>
+					<tamanho>10</tamanho>
+					<dbname>Mat</dbname>
+					<fim>1</fim>
+				</campo>
+				<campo id='nome'>
+					<nome>Nome</nome>
+					<tipo>text</tipo>
+					<tamanho>50</tamanho>
+					<dbname>Nome</dbname>
+					<fim>1</fim>
+				</campo>
+				<campo id='cpf'>
+					<nome>CPF</nome>
+					<tipo>text</tipo>
+					<tamanho>10</tamanho>
+					<margem>5</margem>
+					<dbname>CPF</dbname>
+					<fim>0</fim>
+				</campo>
+				<campo id='rg'>
+					<nome>RG</nome>
+					<tipo>text</tipo>
+					<tamanho>10</tamanho>
+					<margem>130</margem>
+					<entrecampo>-47</entrecampo>
+					<dbname>CertidaoNasc</dbname>
+					<fim>1</fim>
+				</campo>
+				<campo id='sexo'>
+					<nome>Sexo</nome>
+					<tipo>combo</tipo>
+					<tamanho>10</tamanho>
+					<dbname>Sexo</dbname>
+					<fim>1</fim>
+
+				</campo>
+			</campos>
+		</conteiner>
+		<conteiner id='container2' nome='Telefone'>
+			<campos>
+				<campo id='ddd'>
+					<nome>DDD</nome>
+					<tipo>text</tipo>
+					<tamanho>10</tamanho>
+					<margem>5</margem>
+					<fim>0</fim>
+				</campo>
+				<campo id='telefone'>
+					<nome>Telefone</nome>
+					<tipo>text</tipo>
+					<tamanho>10</tamanho>
+					<margem>140</margem>
+					<entrecampo>-47</entrecampo>
+					<fim>1</fim>
+				</campo>
+				<campo id='telefones'>
+					<nome>Telefones</nome>
+					<tipo>grid</tipo>
+					<colunas>
+						<coluna>DDD</coluna>
+						<coluna>Telefone</coluna>
+					</colunas>
+				</campo>
+			</campos>
+		</conteiner>
+		<conteiner id='container3' nome='Matriculas'>
+		</conteiner>
+		<conteiner id='container4' nome='Financeiro'>
+		</conteiner>
+		<conteiner id='container5' nome='Contatos'>
+		</conteiner>
+		<conteiner id='container6' nome='Formularios'>
+		</conteiner>
+	</containers>
+	<query_consulta>Select * from Alunos where Mat = {matricula} </query_consulta>
+</formulario>

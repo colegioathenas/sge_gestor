@@ -1,0 +1,82 @@
+<!-- 
+  Example for using the Java Script API
+  *You need at least the Standard license for this to work (the basic version doesn't contain the java script API)
+-->
+
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+	content="text/html; charset=windows-1252">
+<title>Mizu WebPhone JavaScript API and the webphonetojs
+	callback</title>
+</head>
+
+<body>
+
+	<b>Mizu-WebPhone JavaScript Test</b>
+
+
+
+	<applet archive="webphone.jar" codebase="."
+		code="webphone.webphone.class" name="webphone" width="300"
+		height="330" hspace="0" vspace="0" align="middle" MAYSCRIPT>
+		<param name="mayscript" value="yes">
+		<param name="scriptable" value="true">
+		<param name="serveraddress" value="YOURSIPDOMAIN.COM">
+		<param name="username" value="USERNAME">
+		<param name="password" value="PASSWORD">
+		<param name="applet_size_width" value="255">
+		<param name="applet_size_height" value="50">
+		<param name="jsscriptevent" value="1">
+
+
+		<b>Java is not enabled.</b>
+
+	</applet>
+
+
+
+	<SCRIPT LANGUAGE="javascript">
+   function webphonetojs(varr)
+    {
+        alert(varr);
+        //todo: handle incoming calls and other events here
+    }
+
+
+    function voipRegister(username, password)
+    {
+        
+        document.applets[0].API_Register("", username, password);  	
+    }
+
+    function voipCall(number)
+    {
+        
+        document.applets[0].API_Call(-1, number); 
+    }
+
+    function voipHangup()
+    {
+        
+        document.applets[0].API_Hangup(-2); 	
+    }
+    
+</SCRIPT>
+
+
+	<input type=button value='Register'
+		onClick='voipRegister("USERNAME","PASSWORD")'>
+	<input type=button value='Call' onClick='voipCall("NUMBERTOCALL")'>
+	<input type=button value='Hangup' onClick='voipHangup()'>
+
+
+	<p>
+		<a href="http://www.mizu-voip.com/">Mizutech VoIP</a>
+	</p>
+
+</body>
+
+</html>

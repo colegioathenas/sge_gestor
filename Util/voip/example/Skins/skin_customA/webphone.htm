@@ -1,0 +1,206 @@
+
+<!-- 
+  You must copy the webphone.jar in this directory for this example to work.
+  Then change at least the "serverAddress" variable below.
+  *You need at least the Standard license for this to work (the basic version doesn't contain the java script API)
+  *Make sure to have the webphone.jar near this html or set the file exact path with the "archive" applet parameter
+-->
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css" media="all">
+@import "style.css";
+</style>
+<title>Mizutech Webphone</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="http://www.java.com/js/deployJava.js"></script>
+<script type="text/JavaScript" src="js/curvycorners.src.js"></script>
+<script type="text/JavaScript" src="js/common_webphone.js"></script>
+<script type="text/javascript">var curvyCornersNoAutoScan = true;</script>
+<script type="text/javascript">
+	var attributes = { id: 'webphone', code: 'webphone.webphone.class', name: 'webphone', archive: 'webphone.jar', codebase: '.', width: 1, height: 1, MAYSCRIPT: true };
+	
+	// Webphone Configuration Settings
+	
+	serverAddress = 'yoursipdomain.com'; // yoursipdomain.com your VoIP server IP address or domain name
+	
+	var parameters = {
+					serveraddress: ''+serverAddress+'',
+					JAVA_CODEBASE: '.',
+					username: '',
+					MAYSCRIPT: true,
+					mayscript: 'yes',
+					scriptable: true,
+					jsscriptevent: 2,
+					autocfgsave: 4,
+//					loglevel: 4,
+					hasincomingcall: false,
+					jsscriptevent: 2		// to get EVENTs and user balance(credit)
+					//classloader_cache: false
+					};
+
+	// Webphone Skinn Configuration Settings
+
+	var haveLoginPage = true;				// in case don't want to use login page set this variable to false and call this function, passing the parameters
+											// WJSAPI_LoadAppletAndRegister('SERVERADDRESS', 'USERNAME', 'PASSWORD')
+	
+	var brandname = 'Mizutech';
+	var company_webpage = 'www.mizu-voip.com';
+	
+	var background_color = '#94c23f';		// webphone background color	
+	var general_text_color = '#444444';		// general text color
+	
+	var button_color = '#01afd4'			// button color
+	var button_text_color = '#ffffff';		// button text color
+	
+	var call_button_color = '#1cb12a';		// call button color
+	var hangup_button_color = '#d43434';	// hangup button color
+	
+	var webphone_width = 256;				// width of webphone - don't specify measurement unit
+	var webphone_height = 408;				// height of webphone - don't specify measurement unit
+
+</script>
+</head>
+<body onkeyup="onKeyPressEvent(event)">
+	<div id="js_not_enabled">The webphone needs JavaScript to be
+		enabled</div>
+	<DIV id="main">
+		<div id="bg_container">
+			<div id="container_dial">
+				<!-- Main page (dialpad) -->
+				<div id="header">
+					<img src="images/speaker.png" border="0" title="Volume Controls"
+						id="speaker" onmouseover="btnControl('speaker',2)"
+						onmouseout="btnControl('speaker',1)"
+						onclick="WJSAPI_AudioDevice()" />
+					<div id="logo">
+						<a href="" id="logo_a" target="_blank" title=""></a>
+					</div>
+					<img src="images/logout.png" border="0" title="Logout" id="logout"
+						onmouseover="btnControl('logout',2)"
+						onmouseout="btnControl('logout',1)" onclick="WJSAPI_Unregister()" />
+				</div>
+				<div id="PhoneNumberDiv">
+					<input type="text" id="PhoneNumber" name="PhoneNumber" value=""
+						onfocus="testFocus(1)" onblur="testFocus(0)" /><br />
+				</div>
+				<div style="width: 200px; float: left; clear: both;">
+					<!--//-->
+				</div>
+				<div id="info">
+					<span id="credit" title="My account balance / My number"></span><span
+						id="dtmf"></span>&nbsp;<span id="status"
+						ondblclick="voipStatusRegister()" title="Call status"></span>
+				</div>
+				<div id="info_event">
+					<span id="displayEvent">&nbsp;</span>
+				</div>
+				<div id="lines"></div>
+				<div id="numpad">
+					<div id="btn_1" class="btn_numpad" onclick="WJSAPI_BtnValue(1)">
+						1<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					</div>
+					<div id="btn_2" class="btn_numpad" onclick="WJSAPI_BtnValue(2)">
+						2<span>&nbsp;ABC&nbsp;</span>
+					</div>
+					<div id="btn_3" class="btn_numpad" onclick="WJSAPI_BtnValue(3)">
+						3<span>&nbsp;DEF&nbsp;&nbsp;</span>
+					</div>
+					<div id="btn_4" class="btn_numpad" onclick="WJSAPI_BtnValue(4)">
+						4<span>&nbsp;GHI&nbsp;</span>
+					</div>
+					<div id="btn_5" class="btn_numpad" onclick="WJSAPI_BtnValue(5)">
+						5<span>&nbsp;JKL&nbsp;&nbsp;</span>
+					</div>
+					<div id="btn_6" class="btn_numpad" onclick="WJSAPI_BtnValue(6)">
+						6<span>&nbsp;MNO&nbsp;</span>
+					</div>
+					<div id="btn_7" class="btn_numpad" onclick="WJSAPI_BtnValue(7)">
+						7<span>PQRS</span>
+					</div>
+					<div id="btn_8" class="btn_numpad" onclick="WJSAPI_BtnValue(8)">
+						8<span>&nbsp;TUV&nbsp;&nbsp;</span>
+					</div>
+					<div id="btn_9" class="btn_numpad" onclick="WJSAPI_BtnValue(9)">
+						9<span>&nbsp;WXYZ</span>
+					</div>
+					<div id="btn_10" class="btn_numpad" onclick="WJSAPI_BtnValue('*')">
+						<span style="font-size: 36px; line-height: 17px;">&nbsp;<br />*&nbsp;&nbsp;&nbsp;
+						</span>
+					</div>
+					<div id="btn_0" class="btn_numpad" onclick="WJSAPI_BtnValue(0)">
+						0<span style="font-size: 14px;">&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					</div>
+					<div id="btn_11" class="btn_numpad" onclick="WJSAPI_BtnValue('#')">
+						#<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					</div>
+				</div>
+				<div id="callbuttons">
+					<div id="btn_call" onclick="WJSAPI_Call()">Call</div>
+					<div id="btn_hangup" onclick="WJSAPI_Hangup()">
+						Hangup<span></span>
+					</div>
+				</div>
+				<div id="acceptreject">
+					<div id="btn_accept" onclick="WJSAPI_Accept()">
+						Accept<span></span>
+					</div>
+					<div id="btn_reject" onclick="WJSAPI_Reject()">
+						Reject<span></span>
+					</div>
+				</div>
+				<div id="callfunctions">
+					<div title="Chat" id="btn_chat" onclick="WJSAPI_Chat()">
+						<img src="images/chat.png" border="0" /><span>Chat</span>
+					</div>
+					<div title="Call Transfer" id="btn_transfer"
+						onclick="WJSAPI_CallTransfer()">
+						<img src="images/transfer.png" border="0" /><span>Transfer</span>
+					</div>
+					<div title="Call Hold" id="btn_hold"
+						onclick="WJSAPI_HoldOrVoicemail()">
+						<img src="images/hold.png" id="btn_hold_img" border="0" /><span
+							id="btn_hold_span">Hold</span>
+					</div>
+					<div title="Conference" id="btn_conference"
+						onclick="WJSAPI_Conference()">
+						<img src="images/conference.png" border="0" /><span>Conference</span>
+					</div>
+				</div>
+			</div>
+			<div id="container_register">
+				<!-- Login page -->
+				<div id="logo2">
+					<a href="" id="logo2_a" target="_blank" title=""></a>
+				</div>
+				<div id="login_page_error_messages">&nbsp;</div>
+				<div id="register_form">
+					<br />
+					<br />
+					<br /> <label>Username</label><br /> <input type="text"
+						id="username_input" name="username_input" value=""
+						title="SIP username" /><br />
+					<br /> <label>Password</label><br /> <input type="password"
+						id="password_input" name="password_input" value=""
+						title="SIP password" /><br />
+					<br /> <input type="checkbox" id="savesettings"
+						name="savesettings" value=""
+						title="Save all your login setting on this PC" /><span>Save
+						Settings</span><br />
+					<br />
+					<div id="btn_connect"
+						onclick="return WJSAPI_LoadAppletAndRegister()"
+						title="Register to sipserver">
+						<span>Connect</span>
+					</div>
+				</div>
+			</div>
+			<span id="testtest" style="float: left; text-align: left;"></span>
+		</div>
+	</DIV>
+	<script type="text/JavaScript" src="js/Layout.js"></script>
+</body>
+</html>

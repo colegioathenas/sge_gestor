@@ -1,0 +1,138 @@
+<html>
+
+<head>
+<link rel="StyleSheet" href="style.css" type="text/css">
+<script src="funcoes.js"></script>
+
+<SCRIPT LANGUAGE="JavaScript">
+	function BntOkClick(){		
+		if (window.DescontoAcrescimo[0].checked)
+		{
+			sDesconto  = "0";
+			sAcrescimo = window.edDesconto.value;
+		}
+		else
+		{
+			sDesconto  = window.edDesconto.value;
+			sAcrescimo = "0";
+		}
+		VendeItemDepartamento(window.edCodigoProduto.value,
+													window.edDescricao.value,	
+													window.edAliquota.value,
+													window.edValor.value,
+													window.edQuantidade.value,
+													sAcrescimo,
+													sDesconto,
+													window.edDepartamento.value,
+													window.edUnidadeMedida.value);
+
+	}	
+	function SetaFoco(){
+		window.edCodigoProduto.focus();
+	}
+</SCRIPT>
+
+</head>
+
+<body topmargin="0" leftmargin="0" onload="SetaFoco()">
+
+	<table border="0" cellpadding="0" cellspacing="0" width="889"
+		height="55">
+		<tr>
+			<td width="887" class="title1" height="55" colspan="2">Venda de
+				Item por Departamento</td>
+		</tr>
+		<tr>
+			<td class="text" height="14" width="147" valign="middle" align="left">C�digo
+				do Produto:</td>
+			<td class="text" height="14" width="742" valign="top" align="left"><input
+				type="text" name="edCodigoProduto" size="20" class="text2"
+				value="001"></td>
+		</tr>
+		<tr>
+			<td class="text" height="14" width="147" valign="middle" align="left">Descri��o:
+			</td>
+			<td class="text" height="14" width="742" valign="top" align="left"><input
+				type="text" name="edDescricao" size="20" class="text2"
+				value="coca-cola"></td>
+		</tr>
+		<tr>
+			<td class="text" height="14" width="147" valign="middle" align="left">Al�quota:
+			</td>
+			<td class="text" height="14" width="742" valign="top" align="left"><input
+				type="text" name="edAliquota" size="20" class="text2" value="FF">
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="12" width="147" valign="middle" align="left">Quantidade:
+			</td>
+			<td class="text" height="12" width="742" valign="top" align="left">
+
+				<input type="text" name="edQuantidade" size="20" class="text2"
+				value="1">
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="15" width="147" valign="middle" align="left">Valor
+				Unit�rio:</td>
+			<td class="text" height="15" width="742" valign="top" align="left">
+
+				<input type="text" name="edValor" size="20" class="text2"
+				value="1,00">
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="50" width="147" valign="middle" align="left">Desconto/Acr�scimo
+			</td>
+			<td class="text" height="50" width="742" valign="top" align="left">
+
+				<input type="radio" value="rvDesconto" checked
+				name="DescontoAcrescimo">Desconto <input type="radio"
+				value="rbAcrescimo" name="DescontoAcrescimo">Acr�scimo <br>Valor:
+				<input type="text" name="edDesconto" size="20" class="text2"
+				value="0">
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="13" width="147" valign="middle" align="left">
+				Departamento:</td>
+			<td class="text" height="13" width="742" valign="top" align="left">
+
+				�ndice: <input type="text" name="edDepartamento" size="20"
+				class="text2" value="001">
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="13" width="147" valign="middle" align="left">
+				Unidade de medida:</td>
+			<td class="text" height="13" width="742" valign="top" align="left">
+
+				<input type="text" name="edUnidadeMedida" size="20" class="text2"
+				value="0">
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="13" width="147" valign="middle" align="left">
+			</td>
+			<td class="text" height="13" width="742" valign="top" align="left">
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="52" width="885" colspan="2"><input
+				type="button" value="OK" name="B3" class="Buttom"
+				onClick="BntOkClick()"> <input type="button"
+				value="Cancelar" name="B4" class="Buttom"
+				onClick="javascript: window.location.href='principal.htm';">
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

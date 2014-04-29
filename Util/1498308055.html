@@ -1,0 +1,837 @@
+<script language=JavaScript>parent.erroconfere = "";parent.exibeErro = "";</script>
+<script language="JavaScript">
+var vnome = 'GESSI OLIVEIRA SALINET                  ';
+var vcpf  = '360585210-68'.replace("-","");
+
+var nome1 = vnome.substr(0,vnome.indexOf(" ")).toUpperCase();						// nome do grande porte
+var nome2 = parent.RAIZ_NOME.substr(0,parent.RAIZ_NOME.indexOf(" ")).toUpperCase();	// nome digitado
+
+if (vcpf!=parent.RAIZ_CPF && nome1!=nome2) {
+	parent.erro = "O nome e/ou CPF informado(s) n�o pertence(m) a esse benef�cio.";
+	location.href = "../contexto/HISCRE/hiscrenet2.asp";
+}
+</script>
+<script language="JavaScript">
+
+//  ------------------------------------------------------------------
+//     TITULO : BPVT0311
+//  DESCRICAO : CONSULTA DO �LTIMO HIST�RICO DE CR�DITOS - DETALHAMENTO DE CR�DITO - INTERNET
+//    CRIACAO : 05/06/06
+//  ALTERACAO : 12/07/06
+//    ORIGENS : HISCRENET2.ASP
+//   DESTINOS : HISCRENET2.ASP
+//  CONTEXTOS : HISCRE
+//  --------------------------------------------------------------------
+
+//CAMPOS DA TELA - SADS
+var ns = (document.layers)? true:false;
+var ie = (document.all)? true:false;
+if (ns) document.captureEvents(Event.MOUSEDOWN || Event.CLICK);
+document.onclick = sourcecodeprotect;
+document.onmousedown = sourcecodeprotect;
+
+// ***********************************************************
+function sourcecodeprotect(e) {
+  if (ns&&(e.which==3)) return false;
+  else if (ie&&(window.event.button==2)) 
+     alert("N�o � permitido o uso do bot�o direito.");
+  else return true;
+  }
+
+//***********************************************************
+function cleanup() {
+  if (ns) document.releaseEvents(Event.MOUSEDOWN || Event.CLICK);
+  }
+
+var tlatrs 			= 'BPV03&#38;11'; // campo origem: TLATRS(8)
+var tladthc 		= '06/06/2013  13:11:24'; // campo origem: TLADTHC(20)
+
+var nb 				= '149.830.805-5'; // campo origem: BENNU(999.999.999-9)
+var nbf = '';
+nbf = nb.replace(/&#38;/g,".");
+
+var nome			= 'GESSI OLIVEIRA SALINET      '; // campo origem: RECNM(28)
+var especie 		= ' 41'; // campo origem: 	BENCSESPEC(3)
+var descespecie 	= 'APOSENTADORIA POR IDADE                 '; // campo origem: BENCSESPEC-1(40)
+var pal				= 'PAGA PA  '; //campo origem: PALCS(9)
+var competencia		= '05/2013'; //campo origem: CRED2COMPET(99/9999)
+var periodoinicial	= '01/05/2013'; //campo origem: PERD2INI(99/99/9999)
+var periodofinal	= '31/05/2013'; //campo origem: PERD2FIM(99/99/9999)
+var meiopagto		= 'CCF'; //campo origem: MPGCS(3)
+var oml				= '19.0.25.050'; //campo origem: OLSIDMANUT(99.9.99.999)
+var datadispinicial	= '31/05/2013'; //campo origem: CRED2INIVAL(99/99/9999)
+var datadispfinal	= '31/07/2013'; //campo origem: CRED2FIMVAL(99/99/9999)
+var dataCalcCredito	= '12/05/2013'; //campo origem: CRED2MOVIM(99/99/9999)
+var origem			= 'MACICA     '; //campo origem: CRECSORIGEM(11)
+var datapagto		= '          '; //campo origem: PAGD2CRED(99/99/9999)
+var contacorrente	= '0000067782'; //campo origem: BCCNUCTACOR(10)
+var retorno1		= 'CREDITO SEM RETORNO        ' //campo origem: PAGCSOCORR(27)
+var retorno2		= 'Arq:'; //campo origem: TRACO-2(4)
+var retorno3		= '000127 '; //campo origem: CRENUSERFIT(7)
+var retorno4		= 'Seq:'; //campo origem: TRACO-1(4)
+var retorno5		= '4332502'; //campo origem: CRENUSEQARQ(7)
+var banco			= 'ITAU           '; //campo origem: BANID(15)
+var codbanco		= '539464'; //campo origem: OPGID(6)
+var agencia			= 'PASSO FUNDO AVENIDA BRASIL OESTE        ';	//campo origem: OPGID-1(40)
+var enderecobanco	= 'AVENIDA BRASIL OESTE 855                               '; //campo origem: OPGID-2(55)
+if (enderecobanco  == '                                                       ')
+	enderecobanco = 'N�O INFORMADO.';
+
+function Trim(valor)
+{
+  var novoValor = '';
+  for( i = 0; i < valor.length; i++) {
+    if (valor.substring(i, i+1) != ' ')
+      novoValor += valor.substring(i, i+1);
+  }
+  return novoValor;
+}
+
+function TraduzEspecie(meiopagto)
+{
+  if (meiopagto == 'CMG')
+     return 'CARTAO MAGNETICO';
+  else if (meiopagto == 'APB')
+     return 'CUPOM';
+  else if (meiopagto == 'CCF')
+     return 'CONTA CORRENTE';
+  else if (meiopagto == 'CCL')
+     return 'CONTA CORRENTE';
+  else if (meiopagto == 'PAB')
+     return 'ALTERNATIVO';
+  else if (meiopagto == 'CPB')
+     return 'CHEQUE';
+  else if (meiopagto == 'OPB')
+     return 'ORDEM DE PAGTO';
+  else if (meiopagto == 'RPB')
+     return 'RECIBO DE PAGTO';
+  else if (meiopagto == 'AP ')
+     return 'AUTORIZACAO';
+}
+
+function CriaArray (n) { 
+	this.length = n 
+	for (var i = 1 ; i <= n ; i++) 
+		{ this[i] = "" } 
+} 
+
+function ImprimeCreditoDebito(arrDados) {
+	for (var i = 1 ; i <= 18 ; i++) {
+  		document.write (arrDados[i]);
+	}	
+}
+
+{
+  document.write('<html>');
+
+  document.write('<head>');
+  document.write('<title> Detalhamento de Cr�dito </title>');
+  document.write('</head>');
+
+  document.write('<body alink="#0000ff" background="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/fnada.gif" bgcolor="#ffffff" link="#004080" onunload="cleanup()"');
+  document.write('text="#000000" vlink="#ff0000" topMargin=0 marginheight="0" marginwidth="0" >');
+
+  document.write('<!-- topo azul MPAS -->');
+  document.write('<TABLE border=0 cellPadding=0 cellSpacing=0 height=70 width="100%" name="topo"><TBODY>');
+  document.write('  <TR bgColor=#065ca5>');
+  document.write('    <TD align=left vAlign=top>');
+  document.write('      <TABLE border=0 cellPadding=0 cellSpacing=0>');
+  document.write('        <TBODY>');
+  document.write('        <TR>');
+  document.write('          <TD align=left vAlign=top><A href="http://www.mpas.gov.br/"><IMG ');
+  document.write('            border=0 height=70 ');
+  document.write('            src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/KO.gif" ');
+  document.write('            width=94></A></TD>');
+  document.write('          <TD align=left vAlign=top><BR><A href="http://www.mpas.gov.br/"><IMG ');
+  document.write('            border=0 height=41 ');
+  document.write('            src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/previdencia.gif" ');
+  document.write('            width=290></A></TD></TR></TBODY></TABLE></TD>');
+  document.write('    <TD align=right vAlign=top><A href="http://www.redegoverno.gov.br/"><IMG ');
+  document.write('      border=0 height=70 hspace=0 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/prevnet.gif" ');
+  document.write('      width=139></A></TD></TR></TBODY></TABLE>');
+
+  document.write('<center><font face="Trebuchet MS" color=#065ca5><h2 align="center">Detalhamento de Cr�dito</h2>');
+
+  document.write('<table border="1" width="69%" height="1">');
+  document.write('  <tr>');
+  document.write('    <td width="30%" align="center" bgcolor="#C0C0C0" height="1" valign="top"><p align="left"><small><small><font');
+  document.write('    face="Trebuchet MS">N�mero do Benef�cio</font></small></small></td>');
+  document.write('    <td width="70%" align="center" bgcolor="#C0C0C0" height="1" valign="top"><p align="left"><small><small><font');
+  document.write('    face="Trebuchet MS">Nome do Segurado</font></small></small></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td width="30%" align="center" height="24"><p align="center"><strong><font');
+  document.write('    face="Trebuchet MS">' + nbf + '</font></strong></td>');
+  document.write('    <td width="70%" align="center" height="24"><p align="left"><strong><font');
+  document.write('    face="Trebuchet MS">' + nome + '</font></strong></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%" height="1">');
+  document.write('  <tr>');
+  document.write('    <td width="16%" bgcolor="#C0C0C0" height="1" valign="top"><small><small><font');
+  document.write('    face="Trebuchet MS">Compet�ncia</font></small></small></td>');
+  document.write('    <td width="42%" bgcolor="#C0C0C0" height="1" valign="top"><small><small><font');
+  document.write('    face="Trebuchet MS">Per�odo a que se refere o cr�dito :</font></small></small></td>');
+  document.write('    <td width="38%" bgcolor="#C0C0C0" height="1" valign="top"><small><small><font');
+  document.write('    face="Trebuchet MS">Pagamento atrav�s de :</font></small></small></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td width="16%" height="22"><p align="center"><strong><font face="Trebuchet MS">' + competencia + '</font></strong></td>');
+  document.write('    <td width="18%" height="22"><p align="center"><strong><font face="Trebuchet MS">' + periodoinicial + '</font></strong></td>');
+  document.write('    <td width="5%" height="22"><p align="center"><font face="Trebuchet MS">a</font></td>');
+  document.write('    <td width="20%" height="22"><p align="center"><strong><font face="Trebuchet MS">' + periodofinal + '</font></strong></td>');
+  document.write('    <td width="42%" height="22" valign="top"><p align="left"><strong><font face="Trebuchet MS">' + TraduzEspecie(meiopagto) + '</font></strong></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+// Inclus�o do Campo Esp�cie
+
+  document.write('<table border="1" width="69%" height="23">');
+  document.write('  <tr>');
+  document.write('    <td width="100%" bgcolor="#C0C0C0" height="6" valign="top" align="left" checked="false"><small><font');
+  document.write('    face="Trebuchet MS"><small>Esp�cie</small></font></small></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td width="10%" height="9"><p align="left"><strong><font face="Trebuchet MS">' + especie + '</font></strong></td>');
+  document.write('    <td width="70%" height="9"><strong><font face="Trebuchet MS">' + descespecie + '</font></strong></td>');
+  document.write('    <td width="20%" height="9"><p align="center"><strong><font face="Trebuchet MS">' + pal + '</font></strong></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%" height="14">');
+  document.write('  <tr>');
+  document.write('    <td width="21%" bgcolor="#C0C0C0" height="2" valign="top"><p align="left"><small><small><font');
+  document.write('    face="Trebuchet MS">Banco</font></small></small></td>');
+  document.write('    <td width="54%" bgcolor="#C0C0C0" height="2" valign="top"><small><small><font');
+  document.write('    face="Trebuchet MS">Ag�ncia banc�ria</font></small></small></td>');
+  document.write('    <td width="25%" bgcolor="#C0C0C0" height="2" valign="top"><p align="center"><small><small><font');
+  document.write('    face="Trebuchet MS">C�digo do Banco</font></small></small></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td width="21%" height="9"><p align="left"><strong><font face="Trebuchet MS">' + banco + '</font></strong></td>');
+  document.write('    <td width="54%" height="9"><strong><font face="Trebuchet MS">' + agencia + '</font></strong></td>');
+  document.write('    <td width="25%" height="9"><p align="center"><strong><font face="Trebuchet MS">' + codbanco + '</font></strong></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%" height="23">');
+  document.write('  <tr>');
+  document.write('    <td width="64%" bgcolor="#C0C0C0" height="6" valign="top" align="left" checked="false"><small><font');
+  document.write('    face="Trebuchet MS"><small>Endere�o do banco</small></font></small></td>');
+  document.write('    <td width="36%" bgcolor="#C0C0C0" height="6" valign="top" align="left" checked="false"><small><font');
+  document.write('    face="Trebuchet MS"><small>Dispon�vel para recebimento de :</small></font></small></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="1" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td width="65%" height="5"><small><strong><font face="Trebuchet MS">' + enderecobanco + '</font></strong></small></td>');
+  document.write('    <td width="15%" height="5" style="border: 1px solid"><p align="center"><strong><font');
+  document.write('    face="Trebuchet MS">' + datadispinicial + ' </font></strong></td>');
+  document.write('    <td width="5%" height="5" style="border: 1px solid"><font face="Trebuchet MS"><p');
+  document.write('    align="center">a</font></td>');
+  document.write('    <td width="17%" height="5" style="border: 1px solid"><font face="Trebuchet MS"><p');
+  document.write('    align="center"><strong>' + datadispfinal + '</strong></font></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+  document.write('<small><font face="Trebuchet MS">');
+  document.write('<table border="1" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td height="18" bgcolor="#C0C0C0" colspan="2"><p align="center"><small><strong><font');
+  document.write('    face="Trebuchet MS">C R � D I T O S </font></strong></small></td>');
+  document.write('  </tr>');
+  document.write('  <tr>');
+  document.write('    <td width="366" height="18"><p align="center"><font face="Trebuchet MS"><strong>Descri��o das Rubricas</strong></font></td>');
+  document.write('    <td width="145" height="18"><p align="center"><font face="Trebuchet MS"><strong>Valor</font></strong></td>');
+  document.write('  </tr>');
+
+}
+
+var rubrica, linha;
+var CabecDebito = true;
+arrCreditos = new CriaArray(18);
+arrDebitos = new CriaArray(18);
+
+//imprime 1� Rubrica
+rubrica 	= '101'; //campo origem: RUBCS(3)
+descrub 	= 'Mens. reajustada'; //campo origem: DESCRUB(16)
+vlrub		= '        678,00'; //campo origem: RUBVL(9999999.999,99)
+sinal		= '+'; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+  {
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[1] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+  
+	arrCreditos[1] = linha;
+  	//document.write (linha);
+  }
+}
+
+//imprime 2� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+	{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[2] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[2] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 3� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[3] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[3] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 4� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[4] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[4] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 5� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[5] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[5] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 6� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[6] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[6] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 7� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[7] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[7] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 8� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[8] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[8] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 9� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[9] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[9] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 10� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[10] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[10] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 11� rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[11] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[11] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 12� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+  {
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[12] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[12] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 13� rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+  {
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[13] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[13] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 14� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[14] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[14] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 15� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[15] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[15] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 16� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[16] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[16] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 17� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[17] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[17] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+//imprime 18� Rubrica
+rubrica 	= '   '; //campo origem: RUBCS(3)
+descrub 	= '                '; //campo origem: DESCRUB(16)
+vlrub		= '              '; //campo origem: RUBVL(9999999.999,99)
+sinal		= ' '; //campo origem: SINAL(1)
+
+if (rubrica != '   ')
+{
+  if (parseInt(rubrica) < 300 && parseInt(rubrica) > 199 && CabecDebito)
+{
+    //document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+    //CabecDebito = false;
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrDebitos[18] = linha;
+  }
+  else
+  {
+  	linha = '<tr>';
+	linha = linha + '<td><small>' + descrub +'</small></td>';
+	linha = linha + '<td align=right><small>'+ vlrub + '</small></td> </tr>';
+	arrCreditos[18] = linha;
+  
+  	//document.write (linha);
+  }
+}
+
+{
+	ImprimeCreditoDebito(arrCreditos);
+	document.write ('<tr><td height=18 bgcolor=#C0C0C0 colspan=2><p align=center><strong><font face="Trebuchet MS"><small>D � B I T O S</small></strong></td></tr>');
+	ImprimeCreditoDebito(arrDebitos);
+}
+
+var valorbruto 		= '           678,00'; //campo origem: VALBRUTO(99.999.999.999,99)
+var valordesconto	= '             0,00'; //campo origem: VALDESC(99.999.999.999,99)
+var valorliquido	= '           678,00'; //campo origem: VALLIQ(99.999.999.999,99)
+
+{
+  document.write('</table>');
+  document.write('</font></small>');
+  document.write('<table border="1" width="69%" cellpadding="2">');
+  document.write('  <tr>');
+  document.write('    <td width="33%" align="center" bgcolor="#C0C0C0" style="font-family: Trebuchet MS"><strong>Valor Bruto </strong></td>');
+  document.write('    <td width="33%" align="center" bgcolor="#C0C0C0" style="font-family: Trebuchet MS"><strong>Valor&nbsp; dos');
+  document.write('    Descontos</strong></td>');
+  document.write('    <td width="34%" align="center" bgcolor="#C0C0C0" style="font-family: Trebuchet MS"><strong>Valor L�quido</strong></td>');
+  document.write('  </tr>');
+  document.write('  <tr>');
+  document.write('    <td width="33%" align="right"><strong><font face="Trebuchet MS">' + valorbruto + '</font></strong></td>');
+  document.write('    <td width="33%" align="right"><strong><font face="Trebuchet MS">' + valordesconto + '</font></strong></td>');
+  document.write('    <td width="34%" align="right"><strong><font face="Trebuchet MS">' + valorliquido + '</font></strong></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+
+  document.write('<table border="0" width="69%">');
+  document.write('  <tr>');
+  document.write('    <td width="100%"><p align="center"><u><strong><font face="Trebuchet MS" color=#065ca5>Este');
+  document.write('    extrato vale para simples confer�ncia</font></strong></u></td>');
+  document.write('  </tr>');
+  document.write('</table>');
+  document.write('');
+  document.write('<a href="JavaScript:location.href=\'../contexto/\' + parent.link"><img border="0" height="38" src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/ante.gif" width="120"></a>');
+  document.write('</center>');
+
+  document.write('<TABLE bgColor=#065ca5 border=0 cellPadding=0 cellSpacing=0 height=35 width="100%">');
+  document.write('  <TBODY>');
+  document.write('  <TR>');
+  document.write('    <TD align=left vAlign=top width="1%"><IMG border=0 height=62 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/esquerda3b.gif" ');
+  document.write('      width=70></TD>');
+  document.write('    <TD align=left width="60%"><IMG border=0 height=34 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/rodape_dtp.gif" ');
+  document.write('      width=93><BR><IMG alt="bluebottom2.gif (971 bytes)" height=10 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/bluebottom2.gif" ');
+  document.write('      width=42><IMG border=0 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/dtpextenso2d.gif"><BR></TD>');
+  document.write('    <TD align=right width="40%"><A ');
+  document.write('      href="mailto:webmaster.dtp@rjo.dataprev.gov.br" ');
+  document.write('      title="Fale com a DATAPREV"><IMG border=0 height=25 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/mailslot.gif" ');
+  document.write('      width=36></A></TD>');
+  document.write('    <TD align=right vAlign=top width="1%"><IMG border=0 height=62 ');
+  document.write('      src="' + parent.RAIZ_HTML_GATEWAY + '/CONTEXTO/HISCRE/IMAGENS/padrao1girado.gif" ');
+  document.write('      width=70></TD></TR>');
+  document.write('  </TBODY>');
+  document.write('</TABLE>');
+  document.write('</body>');
+  document.write('</html>');
+
+}
+
+</script>

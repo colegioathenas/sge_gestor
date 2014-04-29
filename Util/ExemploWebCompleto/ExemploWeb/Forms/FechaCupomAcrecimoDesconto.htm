@@ -1,0 +1,80 @@
+<html>
+
+<head>
+
+<script src="funcoes.js"></script>
+<link rel="StyleSheet" href="style.css" type="text/css">
+
+<SCRIPT LANGUAGE="JavaScript">
+	function BntOkClick(){		
+		if (window.AcrescimoDesconto[0].checked)
+			sAcreDesc = 'D';
+		else
+			sAcreDesc = 'A';
+		if (window.rbPercentualValor[0].checked)
+			sPercValor = '%';
+		else
+			sPercValor = '$';
+		
+		FechaCupom	(window.edFormaPagamento.value,sAcreDesc,sAcreDesc,window.edDesconto.value,window.edValorPago.value,window.edMensagemPromocional.value);
+	}	
+	function SetaFoco(){
+		window.edDesconto.focus();
+	}
+</SCRIPT>
+
+</head>
+
+<body topmargin="0" leftmargin="0" onload="SetaFoco()">
+
+	<table border="0" cellpadding="0" cellspacing="0" width="889"
+		height="157">
+		<tr>
+			<td width="887" class="title1" height="55">Fecha Cupom Resumido</td>
+		</tr>
+		<tr>
+			<td class="text" height="50" width="535"><input type="radio"
+				value="RbDesconto" checked name="AcrescimoDesconto">Desconto<input
+				type="radio" value="rbAcrescimo" name="AcrescimoDesconto">Acr�scimo
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="50" width="535"><input type="radio"
+				value="rbPercentual" name="rbPercentualValor" checked>Percentual<input
+				type="radio" value="rbValor" name="rbPercentualValor">Valor
+				<br>
+			<input type="text" name="edDesconto" size="41" class="text2">
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="50" width="535">Forma de pagamento: <br>
+			<input type="text" name="edFormaPagamento" size="41" class="text2">
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="50" width="535">Valor pago: <br>
+			<input type="text" name="edValorPago" size="41" class="text2">
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="50" width="535">Mensagem Promocional<br>
+				<input type="text" name="edMensagemPromocional" size="41"
+				class="text2" value="Obrigado. Volte Sempre!">
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="52" width="535"><input type="button"
+				value="OK" name="B3" class="Buttom" onClick="BntOkClick()">&nbsp;
+				<input type="button" value="Cancelar" name="B4" class="Buttom"
+				onClick="javascript: window.location.href='principal.htm';">
+
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

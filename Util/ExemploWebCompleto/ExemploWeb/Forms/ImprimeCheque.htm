@@ -1,0 +1,127 @@
+<html>
+
+<head>
+<link rel="StyleSheet" href="style.css" type="text/css">
+<script src="funcoes.js"></script>
+
+<SCRIPT LANGUAGE="JavaScript">
+	function BntOkClick(){		
+		
+		if (window.Quantidade[0].checked)
+			sTipoQtde = "I";
+		else
+			sTipoQtde = "F";
+		
+		if (window.ValorUnitario[0].checked)
+			iDecimal = 2;
+		else
+			iDecimal = 3;
+			
+		if (window.Desconto[0].checked)
+			sTipoDesconto = "%";
+		else
+			sTipoDesconto = "$";
+			
+		VendeItem(window.edCodigoProduto.value,
+						  window.edDescricao.value,	
+						  window.edAliquota.value,
+						  sTipoQtde,
+						  window.edQuantidade.value,
+						  iDecimal,
+						  window.edValor.value,
+						  sTipoDesconto,
+						  window.edDesconto);						  			
+	}	
+	function SetaFoco(){
+		window.edCodigoProduto.focus();
+	}
+</SCRIPT>
+
+</head>
+
+<body topmargin="0" leftmargin="0" onload="SetaFoco()">
+
+	<table border="0" cellpadding="0" cellspacing="0" width="889"
+		height="128">
+		<tr>
+			<td width="887" class="title1" height="55" colspan="2">Imprime
+				Cheque</td>
+		</tr>
+		<tr>
+			<td class="text" height="14" width="147" valign="middle" align="left">C�digo
+				do Banco:</td>
+			<td class="text" height="14" width="742" valign="top" align="left"><input
+				type="text" name="edCodigoProduto" size="20" class="text2">
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="14" width="147" valign="middle" align="left">Valor:
+			</td>
+			<td class="text" height="14" width="742" valign="top" align="left"><input
+				type="text" name="edDescricao" size="20" class="text2"></td>
+		</tr>
+		<tr>
+			<td class="text" height="14" width="147" valign="middle" align="left">Favorecido:
+			</td>
+			<td class="text" height="14" width="742" valign="top" align="left"><input
+				type="text" name="edAliquota" size="20" class="text2"></td>
+		</tr>
+		<tr>
+			<td class="text" height="14" width="147" valign="middle" align="left">Cidade:
+			</td>
+			<td class="text" height="14" width="742" valign="top" align="left"><input
+				type="text" name="edAliquota" size="20" class="text2"></td>
+		</tr>
+		<tr>
+			<td class="text" height="14" width="147" valign="middle" align="left">Data:
+			</td>
+			<td class="text" height="14" width="742" valign="top" align="left"><input
+				type="text" name="edAliquota" size="20" class="text2"></td>
+		</tr>
+		<tr>
+			<td class="text" height="14" width="147" valign="middle" align="left">Mensagem:
+			</td>
+			<td class="text" height="14" width="742" valign="top" align="left"><input
+				type="text" name="edAliquota" size="20" class="text2"></td>
+		</tr>
+		<tr>
+			<td class="text" height="50" width="147" valign="middle" align="left">Posi��o
+				da mensagem:</td>
+			<td class="text" height="50" width="742" valign="top" align="left">
+
+				<input type="radio" value="rbQuantidadeInteira" checked
+				name="Quantidade">Na frente do cheque <input type="radio"
+				value="rbQuantidadeFracionaria" name="Quantidade">No verso
+				do cheque
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="50" width="147" valign="middle" align="left">Avan�o
+				de linhas:</td>
+			<td class="text" height="50" width="742" valign="top" align="left">
+
+				&nbsp; <input type="text" name="edValor" size="20" class="text2">
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="13" width="147" valign="middle" align="left">
+			</td>
+			<td class="text" height="13" width="742" valign="top" align="left">
+
+			</td>
+		</tr>
+		<tr>
+			<td class="text" height="52" width="885" colspan="2"><input
+				type="button" value="OK" name="B3" class="Buttom"
+				onClick="BntOkClick()"> <input type="button"
+				value="Cancelar" name="B4" class="Buttom"
+				onClick="javascript: window.location.href='principal.htm';">
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

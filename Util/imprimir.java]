@@ -1,0 +1,20 @@
+import java.applet.Applet;
+import java.awt.Graphics;
+import java.io.*;
+
+public class imprimir extends Applet
+{
+  public void paint(Graphics g)
+  {
+    g.drawString("Imprimindo Solicitacao",200,50);
+    g.drawString("Teste",200,60);
+    try{
+       Runtime rt = Runtime.getRuntime();
+       Process pr = rt.exec("cmd /c dir");
+       BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+       String line = "null";
+    }catch(IOException e){
+       g.drawString("Erro",100,25);
+    }
+  }
+}

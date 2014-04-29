@@ -1,0 +1,205 @@
+
+
+<!-- 
+  Popup example that will handle MAC and different browser issues
+-->
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1">
+<title>Mizutech WebPhone demo</title>
+<SCRIPT language="javascript" type="text/javascript">
+
+
+    var webphoneApplet = null;
+    var boolInCall = 0;
+
+    function webphonetojs(eventNotifyJava) {
+        // Need to convert to JavaScript string as on Mac Safari, the
+        // passed parameter is an unconverted Java string that doesn't
+        // support the JavaScript methods.
+        var eventNotify = "" + eventNotifyJava;
+        //alert(eventNotify);
+
+        if (eventNotify.indexOf("Ringing") != -1) {
+            callRinging()
+        }
+        if (eventNotify.indexOf("In Call") != -1 && boolInCall == 0) {
+            InCall();
+        }
+
+        if (eventNotify.indexOf("Call Finished") != -1) {
+            callEnded();
+        }
+
+        if (eventNotify.indexOf("Error") != -1) {
+            regFailed();
+        }
+    }
+
+
+    function firstRegistration() {
+
+        //first get a handle on the applet
+        if (webphoneApplet == null) {
+            var applets = document.applets;
+
+            // Needed for FireFox
+            if (applets.length == 0) {
+                applets = document.getElementsByTagName("object");
+            }
+
+            //Find the active applet object
+            for (var i = 0; i < applets.length; ++i) {
+                try {
+                    if (typeof (applets[i].API_Call) != "undefined") {
+                        webphoneApplet = applets[i];
+                        break;
+                    }
+                } catch (e) { }
+            }
+        }
+
+        //and then see if we got one!
+        if (webphoneApplet == null) {
+            $('#status').html('Unable to locate applet');
+        }
+    }
+
+
+    function callRinging() {
+        //if we have no handle - lets go get one
+        if (webphoneApplet == null) {
+            firstRegistration();
+        }
+        document.getElementById("calling").innerHTML = "Call Ringing";
+        document.getElementById("cmdHangup").style.display = "";
+    }
+
+
+    function InCall() {
+        boolInCall = 1;
+        document.getElementById("calling").innerHTML = "In Call";
+        document.getElementById("cmdHangup").style.display = "";
+    }
+
+
+    function callEnded() {
+        document.getElementById("calling").innerHTML = "Call Ended";
+        document.getElementById("cmdHangup").value = "Close";
+
+    }
+
+    function regFailed() {
+        document.getElementById("calling").innerHTML = "Call Failed";
+    }
+
+
+    function endCall() {
+        //just in case call never happened...
+        try {
+            webphoneApplet.API_Hangup(-2);
+        } catch (e) { }
+        window.location.href = "closepopup.htm";
+    }
+
+
+
+</SCRIPT>
+</head>
+<body>
+	<div></div>
+
+	<div>
+		<p>Mizutech WebPhone demo</p>
+		<p id="calling">Initiating Call</p>
+		<input type="button" ID="cmdHangup" onclick="endCall();"
+			value="Hangup" style="display: none" />
+	</div>
+
+
+	<!-- Applet param values to set: serveraddress, username, password, callto -->
+	<object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"
+		name="webphone" width="300" height="300" hspace="0" vspace="0"
+		align="middle">
+		<param name="archive" value="webphone.jar">
+			<param name="codebase" value=".">
+				<param name="code" value="webphone.webphone.class">
+					<param name="JAVA_CODEBASE" value=".">
+						<param name="mayscript" value="true" />
+						<param name="scriptable" value="true" />
+
+						<param name="serveraddress" value="XXXXXX">
+							<param name="username" value="XXXXX">
+								<param name="password" value="XXXX">
+									<param name="call" value="true">
+										<param name="callto" value="XXXXXX">
+
+											<param name="applet_size_width" value="1">
+												<param name="applet_size_height" value="1">
+													<param name="jsscriptevent" value="2">
+														<param name="usestun" value="0">
+															<param name="userport" value="0">
+																<param name="multilinegui" value="false">
+																	<param name="autocfgsave" value="0">
+
+																		<param name="cache_option" value="Plugin" />
+																		<param name="cache_archive" value="webphone.jar" />
+																		<param name="cache_archive_ex"
+																			value="webphone.jar;preload" />
+
+
+																		<!--[if gte IE 7]> <!-->
+																		<object type="application/x-java-applet"
+																			classid="java:webphone.webphone.class"
+																			archive="webphone.jar" codebase="." name="webphone"
+																			width="300" height="300" hspace="0" vspace="0"
+																			align="middle">
+																			<!-- Konqueror browser needs the following param -->
+																			<param name="archive" value="webphone.jar">
+																				<param name="code" value="webphone/webphone.class">
+																					<!-- Safari browser needs the following param -->
+																					<param name="JAVA_CODEBASE" value=".">
+																						<param name="mayscript" value="true" />
+																						<param name="scriptable" value="true" />
+
+																						<param name="serveraddress" value="XXXX">
+																							<param name="username" value="XXXX">
+																								<param name="password" value="XXXX">
+																									<param name="call" value="true">
+																										<param name="callto" value="XXXXX">
+
+																											<param name="applet_size_width" value="300">
+																												<param name="applet_size_height" value="300">
+																													<param name="jsscriptevent" value="2">
+																														<param name="usestun" value="0">
+																															<param name="userport" value="0">
+																																<param name="multilinegui" value="false">
+																																	<param name="autocfgsave" value="0">
+
+																																		<param name="cache_option"
+																																			value="Plugin" />
+																																		<param name="cache_archive"
+																																			value="webphone.jar" />
+																																		<param name="cache_archive_ex"
+																																			value="webphone.jar;preload" />
+
+																																		<b>Java is not installed. Get it <a
+																																			href="http://www.java.com/en/download/index.jsp"
+																																			target="_blank">here</a></b>
+																		</object>
+																		<!--<![endif]-->
+	</object>
+
+
+
+
+	<p>
+		<a href="http://www.mizu-voip.com/">Mizutech VoIP</a>
+	</p>
+
+</body>
+</html>
+
