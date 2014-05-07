@@ -60,7 +60,13 @@ $registro = $registros [0];
 					  	$("#professor_cidade_com").val(json.cEnd_com_cidade);
 					  	$("#professor_uf_com").val(json.cEnd_com_uf);					  	
 					  	$("#idchange").val("0");					  	
-					  }
+					  },
+				beforeSend:function(){
+						$("#div_loading").show();
+				},
+				complete: function(data){
+						$("#div_loading").hide();
+				}
 	    		});
 	    	}	    		    
 	    	function verifica_alteracao_professor(){
@@ -302,6 +308,12 @@ $registro = $registros [0];
 									    , professor : $("#professor_cpf").val()
 									    , action	: "E"
 									  	},
+									beforeSend:function(){
+										$("#div_loading").show();
+									},
+									complete: function(data){
+										$("#div_loading").hide();
+									}
 				 			});
 					 	}
 					});
@@ -314,6 +326,12 @@ $registro = $registros [0];
 									  	, professor : $("#professor_cpf").val()
 									  	, action	: "A"
 									  	},
+									beforeSend:function(){
+										$("#div_loading").show();
+									},
+									complete: function(data){
+										$("#div_loading").hide();
+									}
 				 			});
 					 	}
 				 	});					
@@ -328,6 +346,13 @@ $registro = $registros [0];
 									    , professor : $("#professor_cpf").val()
 									    , action:"E"
 									  	},
+									beforeSend:function(){
+										$("#div_loading").show();
+									},
+									complete: function(data){
+										$("#div_loading").hide();
+									}
+									
 				 			});
 					 	}
 					});
@@ -354,7 +379,13 @@ $registro = $registros [0];
 										, disponibilidade_sex_fim :$(this).attr("disponibilidade_sex_fim")
 										, professor : $("#professor_cpf").val()
 									    , action:"A"
-									  	}								  								 
+									  	},
+									beforeSend:function(){
+									 	$("#div_loading").show();
+									},
+									complete: function(data){
+									  	$("#div_loading").hide();
+									}								  								 
 							});
 							
 						 	
@@ -369,6 +400,7 @@ $registro = $registros [0];
 </head>
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
 '			<?php include "../header.inc"?>
 			<div id="menu"><?php include "../menu.inc"; ?></div>
 		<div id="content">

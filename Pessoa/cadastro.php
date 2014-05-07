@@ -69,6 +69,12 @@ $isFuncionario = count ( consulta ( "athenas", "select * from funcionario where 
 			  
 			  success: function(html){
 			 	$("#financeiro_resultado").html(html); 
+			  },
+			  beforeSend:function(){
+				$("#div_loading").show();
+			  },
+			  complete: function(data){
+				$("#div_loading").hide();
 			  }
 			  
 			});
@@ -96,7 +102,13 @@ $isFuncionario = count ( consulta ( "athenas", "select * from funcionario where 
 				  },
 				  success: function(data){
 				  	alert(data);
-				  	}			  
+				  	},
+				  beforeSend:function(){
+				  	$("#div_loading").show();
+				  },
+				  complete: function(data){
+				  	$("#div_loading").hide();
+				  }			  
 				});
 			return false;
 		});
@@ -142,6 +154,12 @@ $isFuncionario = count ( consulta ( "athenas", "select * from funcionario where 
 
                         success: function(data){
                          alert("Atualizado com sucesso");
+                        },
+                        beforeSend:function(){
+                        	$("#div_loading").show();
+                        },
+                        complete: function(data){
+                        	$("#div_loading").hide();
                         }
                     });
                 
@@ -195,6 +213,12 @@ $isFuncionario = count ( consulta ( "athenas", "select * from funcionario where 
                         $.get('../rh/apontamento.php?codigo='+$("#codigo").val(), function(html) {
 						  $("#apontamentos").html(html);
                             });
+                        },
+                        beforeSend:function(){
+                        	$("#div_loading").show();
+                        },
+                        complete: function(data){
+                        	$("#div_loading").hide();
                         }
                     });
                 });
@@ -218,6 +242,12 @@ $isFuncionario = count ( consulta ( "athenas", "select * from funcionario where 
                              $.get("../rh/consulta_comunicacao.php", function(html) {
 						  $("#comunicacao_resultado").html(html);
                             });
+                        },
+                        beforeSend:function(){
+                        	$("#div_loading").show();
+                        },
+                        complete: function(data){
+                        	$("#div_loading").hide();
                         }
                     });
                 });
@@ -227,6 +257,7 @@ $isFuncionario = count ( consulta ( "athenas", "select * from funcionario where 
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

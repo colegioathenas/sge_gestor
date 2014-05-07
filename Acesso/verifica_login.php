@@ -1,6 +1,6 @@
 <?php
 ini_set ( "display_errors", 1 );
-require ("../config.php");
+#include_once ("../config.php");
 include_once "../bd.php";
 
 $useragent = $_SERVER ['HTTP_USER_AGENT'];
@@ -34,10 +34,10 @@ if (($browser == 'Firefox') || ($browser == 'Chrome')) {
 	
 	$query = "call valida_usuario('$login','$senha')";
 	
-	$resultado = consulta ( 'athenas', $query );
+	$resultado = consulta ( 'athenas', $query,true );
 	
 	if (count ( $resultado ) == 0) {
-		header ( "location:login.php?msg=err" );
+		# header ( "location:login.php?msg=err" );
 	} else {
 		$_SESSION ['nCdUsuario'] = $resultado [0] ['nCdUsuario'];
 		$_SESSION ['usuario_nome'] = $resultado [0] ['cNmUsuario'];

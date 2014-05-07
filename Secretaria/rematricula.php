@@ -37,6 +37,12 @@ include_once "../bd.php";
 			  success: function(json){
 			  	$("#imgcaptcha").attr("src",json.img_src);
 			 
+			  },
+			  beforeSend:function(){
+				$("#div_loading").show();
+			  },
+			  complete: function(data){
+				$("#div_loading").hide();
 			  }
 			  
 			});
@@ -114,6 +120,7 @@ include_once "../bd.php";
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

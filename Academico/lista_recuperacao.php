@@ -34,8 +34,13 @@ $registro = $registro [0];
                               },
                         success: function(html){
                             $("#lista_alunos").html(html);
-                        }
-
+                        },
+                        beforeSend:function(){
+                       		$("#div_loading").show();
+                       	},
+                       	complete: function(data){
+                       		$("#div_loading").hide();
+                       	}
                       });
             }
         function carrega_turma(){
@@ -76,6 +81,7 @@ $registro = $registro [0];
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>	
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

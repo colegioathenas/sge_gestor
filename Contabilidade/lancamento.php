@@ -87,6 +87,12 @@ table {
                                 alert("Lancamento Realizado com sucesso!");
                                 carrega_tabela();
                                 $("#lancamento_detalhe").dialog("close");
+                            },
+                            beforeSend:function(){
+                            	$("#div_loading").show();
+                            },
+                            complete: function(data){
+                            	$("#div_loading").hide();
                             }
 
                     });
@@ -99,6 +105,7 @@ table {
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

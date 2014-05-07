@@ -42,6 +42,12 @@ include ("../verifica_logado.php");
 			  	
 			 
 			  
+			  },
+			  beforeSend:function(){
+				$("#div_loading").show();
+		 	  },
+			  complete: function(data){
+				$("#div_loading").hide();
 			  }
 			  
 			});
@@ -121,7 +127,13 @@ include ("../verifica_logado.php");
 			  	$("#valor_juros").val("");
 			  	$("#valor_total").val("");
 			  
-			  }
+			  },
+			  beforeSend:function(){
+				$("#div_loading").show();
+			  },
+			  complete: function(data){
+				$("#div_loading").hide();
+    		  }
 			  
 			});
         	return false;
@@ -135,6 +147,7 @@ include ("../verifica_logado.php");
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

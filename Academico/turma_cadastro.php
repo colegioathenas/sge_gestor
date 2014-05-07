@@ -76,7 +76,13 @@ foreach ( $nxtTurmas as $nxtTurma ) {
 			data: { curso: _valor },
 			success: function(data){
 			  			$("#divisoes").html(data);
-			 		}
+			 		},
+			 beforeSend:function(){
+			 			$("#div_loading").show();
+			 },
+			 complete: function(data){
+			 			$("#div_loading").hide();
+			 }
 		});
                 
 	}
@@ -87,7 +93,13 @@ foreach ( $nxtTurmas as $nxtTurma ) {
 			data: { curso: _valor },
 			success: function(data){
 			  			$("#lista_alunos").html(data);
-			 		}
+			 		},
+			 beforeSend:function(){
+			 			$("#div_loading").show();
+			 },
+			 complete: function(data){
+			 			$("#div_loading").hide();
+			 } 
 		});
     }
     function transferir(_matricula, _turma, _status, _chamada){
@@ -99,7 +111,13 @@ foreach ( $nxtTurmas as $nxtTurma ) {
 				  , chamada:  _chamada},
 			success: function(data){
 				carregar_alunos();
-			 		}
+			 },
+			 beforeSend:function(){
+			 	$("#div_loading").show();
+			 },
+			 complete: function(data){
+			 	$("#div_loading").hide();
+			 } 
 		});
     }
     $(document).on("change","select[name=atualiza_matricula]", function(){
@@ -194,7 +212,13 @@ foreach ( $nxtTurmas as $nxtTurma ) {
 					  	alert("Registro Atualizado");
 		                $("#divisoes_dialog").dialog("close");
 		                carrega_divisoes();			 
-					  }
+					  },
+					  beforeSend:function(){
+						$("#div_loading").show();
+					},
+					complete: function(data){
+						$("#div_loading").hide();
+					} 
 			  
 					});
                     return false;
@@ -256,7 +280,13 @@ foreach ( $nxtTurmas as $nxtTurma ) {
 					    , ultvcto : $("#ultvcto").val() 
 	                    },				  
 				  success: function(){				                			 
-				  }
+				  },
+				  beforeSend:function(){
+						$("#div_loading").show();
+					},
+				complete: function(data){
+						$("#div_loading").hide();
+					} 
 		  
 				});
  			alert("Registro Atualizado");			
@@ -268,7 +298,13 @@ foreach ( $nxtTurmas as $nxtTurma ) {
 				data: { turma: <?php echo getRequest('codigo','0'); ?>},
 				success: function(data){
 					carregar_alunos();
-				 		}
+				 		},
+				beforeSend:function(){
+					$("#div_loading").show();
+					},
+				complete: function(data){
+		 			$("#div_loading").hide();
+				 		} 
 			});
 			return false;
 		});
@@ -284,6 +320,7 @@ foreach ( $nxtTurmas as $nxtTurma ) {
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

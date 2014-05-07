@@ -32,6 +32,12 @@ include ("../verifica_logado.php");
 			  success: function(data){
 			  	$("#resultado").html(data);
 			 
+			  },
+			  beforeSend:function(){
+				$("#div_loading").show();
+			  },
+			 complete: function(data){
+				$("#div_loading").hide();
 			  }
 			  
 			});
@@ -44,6 +50,7 @@ include ("../verifica_logado.php");
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

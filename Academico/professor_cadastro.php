@@ -88,7 +88,13 @@ include ("../Pessoa/dados_gerais_script.inc");
 							  $("#disponibilidade_resultado").html(html);
 							});
 						$("#disponibilidade_dialog").dialog("close");
-				  }
+				  },
+				beforeSend:function(){
+				  		$("#div_loading").show();
+				},
+				complete: function(data){
+				  		$("#div_loading").hide();
+				}	  
 			});
 			return false;
 			
@@ -119,7 +125,13 @@ include ("../Pessoa/dados_gerais_script.inc");
 	                    },
 	                    close: function (event, ui) {
 	                        $(this).remove();
-	                    }
+	                    },
+	    				beforeSend:function(){
+	    				 	$("#div_loading").show();
+	    				},
+	    				complete: function(data){
+	    				 	$("#div_loading").hide();
+	    				}
 						}); 
 				return false;
 		 });
@@ -137,7 +149,14 @@ include ("../Pessoa/dados_gerais_script.inc");
 								  $("#disciplina_resultado").html(html);
 								});
 							$("#disciplina_dialog").dialog("close");
-					  }
+					  },
+					beforeSend:function(){
+					  		$("#div_loading").show();
+					},
+					complete: function(data){
+					  		$("#div_loading").hide();
+					}
+							  
 				});
 				return false;
 				
@@ -168,7 +187,13 @@ include ("../Pessoa/dados_gerais_script.inc");
 		                    },
 		                    close: function (event, ui) {
 		                        $(this).remove();
-		                    }
+		                    },
+		    				beforeSend:function(){
+		    				 	$("#div_loading").show();
+		    				},
+		    				complete: function(data){
+		    				 	$("#div_loading").hide();
+		    				}
 							}); 
 					return false;
 			 });
@@ -180,6 +205,7 @@ include ("../Pessoa/dados_gerais_script.inc");
 
 <body>
 	<div id="container">
+            <?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

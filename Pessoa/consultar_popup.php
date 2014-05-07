@@ -37,6 +37,12 @@ include ("../verifica_logado.php");
 			  success: function(data){
 			  	$("#resultado").html(data);
 			 
+			  },
+			  beforeSend:function(){
+				$("#div_loading").show();
+			  },
+			  complete: function(data){
+				$("#div_loading").hide();
 			  }
 			  
 			});
@@ -52,7 +58,7 @@ include ("../verifica_logado.php");
 </head>
 
 <body>
-
+		<?php include "../loading.inc"?>
 	<label style="margin-top: 5px">Consultar</label>
 	<input id="consulta_valor" name="consulta_valor" type="text" size="50"
 		title="CPF / Nome" />

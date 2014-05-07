@@ -41,6 +41,12 @@ include ("../verifica_logado.php");
 				  	$("#boleto_abt").val(json.qtdBol);
 				  	$("#valor_total").val(json.vlrTotal);
 				  
+				  },
+				  beforeSend:function(){
+					$("#div_loading").show();
+				  },
+				  complete: function(data){
+					$("#div_loading").hide();
 				  }
 				  
 				});
@@ -66,6 +72,7 @@ include ("../verifica_logado.php");
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

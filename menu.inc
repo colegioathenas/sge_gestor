@@ -11,7 +11,7 @@
 	
 	if (($_SESSION ['CNTMOV'] == "00001") || ($_SESSION ['CNTCONT'] == "00001") || ($_SESSION ['CTBIMPOFX'] == "00001") || ($_SESSION ['CTBCONCI'] == "00001")
 		//CTBCONCI
-	  ){) 
+	  ){
 
 		$mostra_cnt = true;
 	}

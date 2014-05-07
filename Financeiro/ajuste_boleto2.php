@@ -50,6 +50,12 @@ $resultado = consulta ( "athenas", $query );
 			  
 			  success: function(html){
 			 	$("#titulos_resultado").html(html); 
+			  },
+			  beforeSend:function(){
+				$("#div_loading").show();
+			  },
+			  complete: function(data){
+				$("#div_loading").hide();
 			  }
 			  
 			});
@@ -71,6 +77,12 @@ $resultado = consulta ( "athenas", $query );
 				  	$("#pessoa_nome").val(json.cNome);
 				 
 				  
+				  },
+				  beforeSend:function(){
+					$("#div_loading").show();
+				  },
+				  complete: function(data){
+					$("#div_loading").hide();
 				  }
 				  
 				});
@@ -103,6 +115,7 @@ $resultado = consulta ( "athenas", $query );
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

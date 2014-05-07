@@ -139,7 +139,13 @@ $_SESSION ['cpf'] = $codigo;
                                   , chtp: $(this).attr("chtp")
                                   , che: $(this).attr("che")
                                   , modulo: $(this).attr("modulo")
-                                  },				  
+                                  },
+                        beforeSend:function(){
+                           		$("#div_loading").show();
+                          	},
+                        complete: function(data){
+                           		$("#div_loading").hide();
+                           	} 				  
 					});
 				 }
                  if($(this).val() === "E"){
@@ -163,6 +169,7 @@ $_SESSION ['cpf'] = $codigo;
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

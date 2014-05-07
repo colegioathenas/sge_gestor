@@ -83,6 +83,12 @@ $dados_aluno = $resultado [0];
 				  success: function(json){
 				  	$("#resp_cel_operadora").val(json.operadora);
 				  	
+				  	},
+				  beforeSend:function(){
+				  	$("#div_loading").show();
+				    },
+				  complete: function(data){
+				  	$("#div_loading").hide();
 				  	}			  
 				});
 			}
@@ -143,6 +149,12 @@ $dados_aluno = $resultado [0];
 				  	$(_campo_cep).val(json.cep);
 				  	
 				  	
+				  	},
+				  	beforeSend:function(){
+				  		$("#div_loading").show();
+				  	},
+				  	complete: function(data){
+				  		$("#div_loading").hide();
 				  	}			  
 				});
 			return false;
@@ -168,6 +180,12 @@ $dados_aluno = $resultado [0];
 				  	$("#aluno_bairro").val(json.bairro);
 				  	$("#aluno_cidade").val(json.cidade);
 				  	$("#aluno_uf").val(json.uf);
+				  	},
+				  	beforeSend:function(){
+				  		$("#div_loading").show();
+				  	},
+				  	complete: function(data){
+				  		$("#div_loading").hide();
 				  	}			  
 				});
 			}
@@ -220,6 +238,12 @@ $dados_aluno = $resultado [0];
 				  	$("#resp_end_com_bairro").val(json.bairro);
 				  	$("#resp_end_com_cidade").val(json.cidade);
 				  	$("#resp_end_com_uf").val(json.uf);
+				  },
+				  beforeSend:function(){
+					$("#div_loading").show();
+				  },
+				  complete: function(data){
+					$("#div_loading").hide();
 				  }			  
 				});
 			}
@@ -367,6 +391,7 @@ $dados_aluno = $resultado [0];
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

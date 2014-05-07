@@ -35,6 +35,12 @@ ini_set ( "display_errors", 0 );
 					  success: function(data){
 						  $("#curso").empty()
 						  	.append(data);					  				
+					  },
+					  beforeSend:function(){
+						$("#div_loading").show();
+					  },
+					  complete: function(data){
+						$("#div_loading").hide();
 					  }					  
 					});
 			}else{
@@ -46,6 +52,12 @@ ini_set ( "display_errors", 0 );
 						  $("#turma")
 						  	.empty()
 						  	.append(data);						  				
+					  },
+					  beforeSend:function(){
+						$("#div_loading").show();
+					  },
+					  complete: function(data){
+						$("#div_loading").hide();
 					  }					  
 					});
 			}
@@ -78,6 +90,7 @@ ini_set ( "display_errors", 0 );
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

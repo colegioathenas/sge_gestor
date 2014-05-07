@@ -70,6 +70,12 @@ table {
 					  $("#desmembrar_dialog").dialog("close");
 					  alert('Desmembramento Realizado Com Sucesso');
 				 
+				  },
+				  beforeSend:function(){
+					$("#div_loading").show();
+				  },
+				  complete: function(data){
+				  	$("#div_loading").hide();
 				  }
 			});
 			return false;
@@ -90,6 +96,12 @@ table {
 				  
 				  success: function(json){
 				 
+				  },
+				  beforeSend:function(){
+					$("#div_loading").show();
+				  },
+				  complete: function(data){
+					$("#div_loading").hide();
 				  }
 				  
 				});
@@ -103,6 +115,7 @@ table {
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

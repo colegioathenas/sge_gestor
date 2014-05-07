@@ -71,6 +71,12 @@ include ("verifica_logado.php");
 				  	$("#vlrDesconto").val("0,00");
 				  	$("#vlrTotal").val(json.VlrTotal);
 				  	$("#vlr_restante").text(json.VlrTotal);
+				  },
+				  beforeSend:function(){
+					$("#div_loading").show();
+				  },
+				 complete: function(data){
+					$("#div_loading").hide();
 				  }
 				});
         });
@@ -104,6 +110,7 @@ include ('acordo_recalculo.php');
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

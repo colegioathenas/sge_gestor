@@ -41,7 +41,13 @@ $registro = $registros [0];
 			  success: function(data){
 			  	$("#resultado").html(data);
 			 
-			  }
+			  },
+			  beforeSend:function(){
+				$("#div_loading").show();
+				},
+			  complete: function(data){
+				$("#div_loading").hide();
+				} 
 			  
 			});
 			return false;
@@ -71,7 +77,13 @@ $registro = $registros [0];
                                     success: function(data){
                                           
 
-                                    }
+                                    },
+                                    beforeSend:function(){
+                                    	$("#div_loading").show();
+                                    },
+                                    complete: function(data){
+                                    	$("#div_loading").hide();
+                                    } 
 
                                   });
                                     
@@ -97,6 +109,7 @@ $registro = $registros [0];
 
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
             <?php include "../header.inc"?>
             <div id="menu"><?php include "../menu.inc"; ?></div>
 

@@ -63,6 +63,12 @@ include_once "../bd.php";
 					  	$("#aluno_uf_com").val(json.cEnd_com_uf);
 					  	carregar_campos_respfin(json.nCdRespFin);
 					  	$("#idchange").val("0");					  	
+					  },
+					  beforeSend:function(){
+						$("#div_loading").show();
+					  },
+					  complete: function(data){
+						$("#div_loading").hide();
 					  }
 	    		});
 	    	}
@@ -99,6 +105,12 @@ include_once "../bd.php";
 					  	$("#respfin_cidade_com").val(json.cEnd_com_cidade);
 					  	$("#respfin_uf_com").val(json.cEnd_com_uf);
 					  	$("#idchange").val("0");					  	
+					  },
+					  beforeSend:function(){
+						$("#div_loading").show();
+					  },
+					  complete: function(data){
+						$("#div_loading").hide();
 					  }
 	    		});
 	    	}
@@ -231,6 +243,7 @@ include_once "../bd.php";
 </head>
 <body>
 	<div id="container">
+			<?php include "../loading.inc"?>
 			<?php include "../header.inc"?>
 			<div id="menu"><?php include "../menu.inc"; ?></div>
 		<div id="content">

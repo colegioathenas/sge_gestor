@@ -306,3 +306,21 @@ th {
 .trhover {
 	background-color: #00FF00;
 }
+
+.divloading {
+	display:none;
+	z-index:9999;
+	position:absolute;
+	width:100%;
+	background-color:rgba(190,190,190,0.3);
+	height:100%
+	}
+
+.divloading_img {
+	text-align:center;
+	position:relative;
+	left:-moz-calc(50% - 63px);
+	top:-moz-calc(50% - 11px);
+	position:absolute
+	
+}
