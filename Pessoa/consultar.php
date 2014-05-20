@@ -64,10 +64,6 @@ include ("../verifica_logado.php");
 						<li><a href="#consulta"><img
 								src="../image/procurar_pessoa_icon.jpg" height="30px" />&nbsp;Consultar
 								Pessoa</a></li>
-						<li><a href="#consulta2"><img
-								src="../image/procurar_pessoa_icon.jpg" height="30px" />&nbsp;Consultar
-								Pessoa 2</a></li>
-
 					</ul>
 
 					<div id="consulta"

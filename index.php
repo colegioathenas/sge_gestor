@@ -44,8 +44,6 @@ include ("verifica_logado.php");
 		<div id="content">
 
 			<form name="frm1" id="frm1" method="post" action="verificafin.php">
-				<script language=javascript
-					src='http://honline.atendimentogratis.com.br/honline.asp?id=34015&s=36732&i=1&on=http://&off=http://'></script>
 				<table style="width: 100%; text-align: center">
 					<tr style="height: 200px; vertical-align: bottom">
 						<td><a href="/Acesso/index.php"><img
