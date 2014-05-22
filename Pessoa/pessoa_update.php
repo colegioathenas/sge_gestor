@@ -15,6 +15,8 @@ $naturalidade = $_REQUEST ['naturalidade'];
 $naturalidadeUF = $_REQUEST ['naturalidadeUF'];
 $nacionalidade = $_REQUEST ['nacionalidade'];
 $email = $_REQUEST ['email'];
+$negativado = $_REQUEST ['negativado'];
+$juridico = $_REQUEST ['juridico'];
 $pai = $_REQUEST ['pai'];
 $mae = $_REQUEST ['mae'];
 $respfin = $_REQUEST ['respfin'];
@@ -27,7 +29,5 @@ $cidadecom = $_REQUEST ['cidadecom'];
 $ufcom = $_REQUEST ['ufcom'];
 $codigo = $_REQUEST ['codigo'];
 
-atualiza_pessoa ( $rm, $nome, $endereco, $complemento, $cep, $cidade, $bairro, $uf, $rg, $cpf, $datanascimento, $naturalidade, $naturalidadeUF, $nacionalidade, $email, $pai, $mae, $respfin, $profissao, $estadocivil, $cepcom, $endcom, $bairrocom, $cidadecom, $ufcom, $codigo );
+atualiza_pessoa ( $rm, $nome, $endereco, $complemento, $cep, $cidade, $bairro, $uf, $rg, $cpf, $datanascimento, $naturalidade, $naturalidadeUF, $nacionalidade, $email, $pai, $mae, $respfin, $profissao, $estadocivil, $cepcom, $endcom, $bairrocom, $cidadecom, $ufcom, $codigo, $negativado, $juridico );
 ?>
-
-

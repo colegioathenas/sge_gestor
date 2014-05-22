@@ -1,117 +1,129 @@
-
 <label id="nCdPessoa_label" style="margin-top: 5px">CPF</label>
 <input id="nCdPessoa" type="text" size='21'
-	value='<?php echo str_pad( $registro['nCPF'],11,"0",STR_PAD_LEFT); ?>' />
+    value='<?php echo str_pad( $registro['nCPF'],11,"0",STR_PAD_LEFT); ?>' />
 <label style="margin-top: 5px; width: 22px; margin-left: 15px">RG</label>
 <input id="rg" name='rg' type="text" size='20'
-	value='<?php echo $registro['cRG']; ?>' />
+    value='<?php echo $registro['cRG']; ?>' />
 <?php
 
 if ($_SESSION ['CADSISCON'] == "00001") {
-	echo "<a href=\"\" id='consultas_login'>[Sistemas de Consulta]</a>";
+    echo "<a href=\"\" id='consultas_login'>[Sistemas de Consulta]</a>";
 }
 ?>
 <br />
 <label style="margin-top: 5px">Nome</label>
 <input id="nome" name="nome" type="text" size='50'
-	value='<?php echo $registro['cNome']; ?>' />
+    value='<?php echo $registro['cNome']; ?>' />
 <br />
 <label style="margin-top: 5px">Dt. Nasc.</label>
 <input id="dt_nasc" name="nome" type="text" size='20'
-	value='<?php echo date("d/m/Y",strtotime($registro['dNasc'])); ?>' />
+    value='<?php echo date("d/m/Y",strtotime($registro['dNasc'])); ?>' />
 <br />
 <label style="margin-top: 5px">Naturalidade</label>
 <input id="naturalidade" name="nome" type="text" size='39'
-	value='<?php echo $registro['cNaturalidade']; ?>' />
+    value='<?php echo $registro['cNaturalidade']; ?>' />
 <label style="margin-top: 5px; margin-left: 10px; width: 20px">UF</label>
 <input id="naturalidade_uf" name="uf" type="text" size='3'
-	value='<?php echo $registro['cNaturalidadeUf']; ?>' />
+    value='<?php echo $registro['cNaturalidadeUf']; ?>' />
 <br />
 <label style="margin-top: 5px">Nacionalidade</label>
 <input id="nacionalidade" name="nome" type="text" size='39'
-	value='<?php echo $registro['cNacionalidade']; ?>' />
+    value='<?php echo $registro['cNacionalidade']; ?>' />
 <br />
 <label style="margin-top: 5px">Profissao</label>
 <input id="profissao" name="nome" type="text" size='20'
-	value='<?php echo $registro['cProfissao']; ?>' />
+    value='<?php echo $registro['cProfissao']; ?>' />
 
 <label style="margin-top: 5px" id="estcivil">Estado Civil</label>
 <select>
-	<option value="0">SELECIONE</option>
-	<option value="1">SOLTEIRO(A)</option>
-	<option value="2">CASADO(A)</option>
-	<option value="3">DIVORCIADO(A)</option>
-	<option value="4">VIUVO(A)</option>
+    <option value="0">SELECIONE</option>
+    <option value="1">SOLTEIRO(A)</option>
+    <option value="2">CASADO(A)</option>
+    <option value="3">DIVORCIADO(A)</option>
+    <option value="4">VIUVO(A)</option>
 </select>
 <br />
 <label style="margin-top: 5px">Pai</label>
 <input id="pai" name="nome" type="text" size='50'
-	value='<?php echo $registro['cFiliacaoPai']; ?>' />
+    value='<?php echo $registro['cFiliacaoPai']; ?>' />
 <br />
 <label style="margin-top: 5px">Mae</label>
 <input id="mae" name="nome" type="text" size='50'
-	value='<?php echo $registro['cFiliacaoMae']; ?>' />
+    value='<?php echo $registro['cFiliacaoMae']; ?>' />
 <br />
 <label style="margin-top: 5px">Resp. Fin.</label>
 <input id="resp_financeiro" name="nome" type="text" size='20'
-	value='<?php echo str_pad( $registro['nCdRespFin'],11,"0",STR_PAD_LEFT); ?>' />
+    value='<?php echo str_pad( $registro['nCdRespFin'],11,"0",STR_PAD_LEFT); ?>' />
 <a href="cadastro.php?cpf=<?php echo $registro['nCdRespFin'];?>"> <input
-	id="resp_financeiro_nome" name="nome" type="text" size='30'
-	value='<?php echo $registro['cNmRespFin']; ?>' readonly="readonly" /></a>
+    id="resp_financeiro_nome" name="nome" type="text" size='30'
+    value='<?php echo $registro['cNmRespFin']; ?>' readonly="readonly" /></a>
 <br />
 <label style="margin-top: 5px">Email</label>
 <input id="email" name="nome" type="text" size='50'
-	value='<?php echo $registro['cEmail']; ?>' />
+    value='<?php echo $registro['cEmail']; ?>' />
 <a href="#" class='sbtn2' id="btnEnviarSenha">Enviar Senha</a>
 <br />
+<?php if ($_SESSION ['VERSIT'] == "00001"){?>
+<label style="margin-top: 5px" > Negativado : </label>
+<select id="negativado">   
+    <option value="0"<?php if ($registro['bNegativado']==0 ){ echo "selected='selected'"; } ?>>N&AtildeO</option>
+    <option value="1" <?php if ($registro['bNegativado']==1 ){ echo "selected='selected'"; } ?>>SIM</option>   
+</select>
+<label style="margin-top: 5px" >Juridico : </label>
+<select id ="juridico">
+    <option value="0"<?php if ($registro['bJuridico']==0 ){ echo "selected='selected'"; } ?>>N&AtildeO</option>
+    <option value="1" <?php if ($registro['bJuridico']==1 ){ echo "selected='selected'"; } ?>>SIM</option>
+</select>
+<?php }?>
+
 <div class="divisao">Endereço Residencial</div>
 <label style="margin-top: 5px">CEP</label>
 <input id="cep" name="cep" type="text" size='10'
-	value='<?php echo str_pad( $registro['nCEP'],8,"0",STR_PAD_LEFT); ?>' />
+    value='<?php echo str_pad( $registro['nCEP'],8,"0",STR_PAD_LEFT); ?>' />
 <br />
 <label style="margin-top: 5px">Endereco</label>
 <input id="endereco" name="endereco" size='50' type="text"
-	value='<?php echo $registro['cLogradouro']; ?>' />
+    value='<?php echo $registro['cLogradouro']; ?>' />
 
 <label style="margin-top: 5px">Complemento</label>
 <input id="endereco_complemento" name="endereco_complemento" size='10'
-	type="text" value='<?php echo $registro['cComplemento']; ?>' />
+    type="text" value='<?php echo $registro['cComplemento']; ?>' />
 <br />
 <label style="margin-top: 5px">Bairro</label>
 <input id="bairro" name="bairro" type="text" size='30'
-	value='<?php echo $registro['cBairro']; ?>' />
+    value='<?php echo $registro['cBairro']; ?>' />
 
 <label style="margin-top: 5px">Cidade</label>
 <input id="cidade" name="cidade" type="text" size='30'
-	value='<?php echo $registro['cCidade']; ?>' />
+    value='<?php echo $registro['cCidade']; ?>' />
 
 <label style="margin-top: 5px; margin-left: 26px; width: 20px">UF</label>
 <input id="uf" name="uf" type="text" size='3'
-	value='<?php echo $registro['cUF']; ?>' />
-<div class="divisao">Endereço Comercial</div>
+    value='<?php echo $registro['cUF']; ?>' />
+<div class="divisao">EndereÃ§o Comercial</div>
 <label style="margin-top: 5px">CEP</label>
 <input id="cep_com" name="cep" type="text" size='10'
-	value='<?php echo str_pad( $registro['cEnd_com_cep'],8,"0",STR_PAD_LEFT); ?>' />
+    value='<?php echo str_pad( $registro['cEnd_com_cep'],8,"0",STR_PAD_LEFT); ?>' />
 <br />
 <label style="margin-top: 5px">Endereco</label>
 <input id="endereco_com" name="endereco" size='50' type="text"
-	value='<?php echo $registro['cEnd_com_end']; ?>' />
+    value='<?php echo $registro['cEnd_com_end']; ?>' />
 <!--
-							<label  style="margin-top:5px">Complemento</label>
-							<input id="endereco_complemento" name="endereco_complemento" size='10' type="text" value='<?php echo $registro['cComplemento']; ?>'/>
-							-->
+                            <label  style="margin-top:5px">Complemento</label>
+                            <input id="endereco_complemento" name="endereco_complemento" size='10' type="text" value='<?php echo $registro['cComplemento']; ?>'/>
+                            -->
 <br />
 <label style="margin-top: 5px">Bairro</label>
 <input id="bairro_com" name="bairro" type="text" size='30'
-	value='<?php echo $registro['cEnd_com_bairro']; ?>' />
+    value='<?php echo $registro['cEnd_com_bairro']; ?>' />
 
 <label style="margin-top: 5px">Cidade</label>
 <input id="cidade_com" name="cidade" type="text" size='30'
-	value='<?php echo $registro['cEnd_com_cidade']; ?>' />
+    value='<?php echo $registro['cEnd_com_cidade']; ?>' />
 
 <label style="margin-top: 5px; margin-left: 26px; width: 20px">UF</label>
 <input id="uf_com" name="uf" type="text" size='3'
-	value='<?php echo $registro['cEnd_com_uf']; ?>' />
+    value='<?php echo $registro['cEnd_com_uf']; ?>' />
 
 
 <br />
@@ -123,11 +135,11 @@ if ($_SESSION ['CADSISCON'] == "00001") {
 
 
 <table>
-	<tr style="background-color: black; color: white">
-		<td width="50px">DDD</td>
-		<td width="150px">Telefone</td>
-	</tr>
+    <tr style="background-color: black; color: white">
+        <td width="50px">DDD</td>
+        <td width="150px">Telefone</td>
+    </tr>
 </table>
 <div id='telefone' style='height: 150px; width: 210px; overflow-y: auto'>
-	<table id="telefones"></table>
+    <table id="telefones"></table>
 </div>
